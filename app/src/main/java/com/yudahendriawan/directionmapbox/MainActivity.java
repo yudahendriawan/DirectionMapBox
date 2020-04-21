@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
 
+
                         // Set the origin location to the Alhambra landmark in Granada, Spain.
                         origin = Point.fromLngLat(112.802, -7.295);
 

@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Point> pointList;
     private String routeURL;
 
+    String routePointList = "";
+    String origin_ = "";
+    String destination_ = "";
+
     int vertices = 31;
     Graph graph = new Graph(vertices);
     DepthFirstSearch dfs = new DepthFirstSearch();
@@ -89,10 +93,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         graph.addEdge();
-        dfs.printAllPaths(graph, 0, 3);
+        dfs.printAllPaths(graph, 0, 5);
 
         //akan digunakan utk menampung criteria
         Double[][] data = new Double[dfs.temp.size()][3];
+
+
+        // System.out.println("\n{Jarak, Jumlah Wisata, Kepadatan}");
+        for (int i = 0; i < dfs.temp.size(); i++) {
+            //   System.out.print("[C" + (i + 1) + "] {");
+            for (int j = 0; j < 3; j++) {
+                data[i][j] = dfs.temp.get(i).get(j);
+//                System.out.print(+data[i][j]);
+//                if (j == 2) {
+//                    System.out.print("");
+//                } else {
+//                    System.out.print(",");
+//                }
+            }
+            // System.out.println("}");
+        }
 
         //menyimpan data dalam bentuk arrayList
         ArrayList<Criteria> listCriteria = new ArrayList<>();
@@ -154,11 +174,11 @@ public class MainActivity extends AppCompatActivity {
                 rank1 = i;
         }
 
-        Double[] pathResult = new Double[dfs.temp.get(rank1 - 1).size()];
+        Double[] pathResult = new Double[dfs.temp.get(rank1).size()];
 
         //copy element of arraylist in index rank1 to array 1 dim.
         for (int i = 0; i < pathResult.length; i++) {
-            pathResult[i] = dfs.temp.get(rank1 - 1).get(i);
+            pathResult[i] = dfs.temp.get(rank1).get(i);
         }
 
         //to get just path, not include criteria
@@ -168,6 +188,29 @@ public class MainActivity extends AppCompatActivity {
         int[] pathResultFixInt = new int[pathResultFix.length];
         for (int i = 0; i < pathResultFixInt.length; i++) {
             pathResultFixInt[i] = pathResultFix[i].intValue();
+        }
+
+
+        for (int i = 0; i < pathResultFixInt.length; i++) {
+            for (int j = 0; j < graph.getLongLat().length; j++) {
+                if (i > 0 && i < pathResultFixInt.length - 1) {
+                    if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j])) {
+                        routePointList = routePointList + graph.getLongLat()[j + 1];
+                        if (i != pathResultFixInt.length - 2) {
+                            routePointList = routePointList + "/";
+                        }
+                    }
+                }
+                if (i == 0) {
+                    if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j]))
+                        origin_ = origin_ + graph.getLongLat()[j + 1];
+                }
+                if (i == pathResultFixInt.length - 1) {
+                    if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j]))
+                        destination_ = destination_ + graph.getLongLat()[j + 1];
+                }
+
+            }
         }
 
         //String originString = graph.getLongLat()[2];
@@ -184,17 +227,31 @@ public class MainActivity extends AppCompatActivity {
                     public void onStyleLoaded(@NonNull Style style) {
 
 
+//                        for(String s : Arrays.asList(origin_.split(","))){
+//                            Double latitude = Double.valueOf(s.indexOf(0));
+//                            Double longitude = Double.valueOf(s.indexOf(1));
+//                            origin = Point.fromLngLat(longitude,latitude);
+//                        }
+//
+//                        for(String s : Arrays.asList(destination_.split(","))){
+//                            Double latitude = Double.valueOf(s.indexOf(0));
+//                            Double longitude = Double.valueOf(s.indexOf(1));
+//                            destination = Point.fromLngLat(longitude,latitude);
+//                        }
+
+
+
                         // Set the origin location to the Alhambra landmark in Granada, Spain.
-                        origin = Point.fromLngLat(112.802, -7.295);
+                        origin = Point.fromLngLat(112.803655, -7.294455);
 
                         // Set the destination location to the Plaza del Triunfo in Granada, Spain.
-                        destination = Point.fromLngLat(112.759526, -7.272280);
+                        destination = Point.fromLngLat(112.805451, -7.276591);
 
                         //klennteng sangar agung, pantai ria kenjeran
                         routeURL = "-7.247226, 112.802257/-7.249400, 112.800501";
 
                         pointList = new ArrayList<>();
-                        for (String s: Arrays.asList(routeURL.split("/"))){
+                        for (String s : Arrays.asList(routePointList.split("/"))) {
                             Double latitude = Double.valueOf(s.split(",")[0]);
                             Double longitude = Double.valueOf(s.split(",")[1]);
                             pointList.add(Point.fromLngLat(longitude, latitude));

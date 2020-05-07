@@ -3,6 +3,7 @@ package com.yudahendriawan.directionmapbox;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mapbox.api.directions.v5.DirectionsCriteria;
@@ -34,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -71,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Point> pointList;
     private String routeURL;
 
+    int vertices = 31;
+    Graph graph = new Graph(vertices);
+    DepthFirstSearch dfs = new DepthFirstSearch();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,91 @@ public class MainActivity extends AppCompatActivity {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
+
+        graph.addEdge();
+        dfs.printAllPaths(graph, 0, 3);
+
+        //akan digunakan utk menampung criteria
+        Double[][] data = new Double[dfs.temp.size()][3];
+
+        //menyimpan data dalam bentuk arrayList
+        ArrayList<Criteria> listCriteria = new ArrayList<>();
+        for (Double[] dataKu : data) {
+            Criteria criteria = new Criteria();
+            criteria.setJarak(dataKu[0]);
+            criteria.setWisata(dataKu[1]);
+            criteria.setKepadatan(dataKu[2]);
+
+            listCriteria.add(criteria);
+        }
+
+        //inisisasi bobot pada setiap kriteria
+        int bobotJarak = 5;
+        int bobotWisata = 3;
+        int bobotKepadatan = 2;
+        double totalBobot = bobotJarak + bobotKepadatan + bobotWisata;
+
+        //Penormalan Bobot
+        double bobotNormalJarak = bobotJarak / totalBobot;
+        double bobotNormalWisata = bobotWisata / totalBobot;
+        double bobotNormalKepadatan = bobotKepadatan / totalBobot;
+
+        //inisiasi array utk menyimpan vektor S
+        //memangkatkan setiap kriteria dengan bobot
+        //dengan pangkat bobot + utk kriteria benefit (wisata) dan - utk kriteria cost(kepadatan,jarak).
+        double[] vektorS = new double[listCriteria.size()];
+        for (int i = 0; i < listCriteria.size(); i++) {
+            vektorS[i] = Math.pow(listCriteria.get(i).getJarak(), -bobotNormalJarak)
+                    * Math.pow(listCriteria.get(i).getWisata(), bobotNormalWisata)
+                    * Math.pow(listCriteria.get(i).getKepadatan(), -bobotNormalKepadatan);
+
+        }
+
+        //menjumlahkan vektor S dan print vektor S
+        double sigmaVektorS = 0;
+        for (int k = 0; k < vektorS.length; k++) {
+            sigmaVektorS = sigmaVektorS + vektorS[k];
+        }
+
+        //hitung vektor V pada setiap alternatif
+        Double[] vektorV = new Double[listCriteria.size()];
+        for (int i = 0; i < listCriteria.size(); i++) {
+            vektorV[i] = vektorS[i] / sigmaVektorS;
+        }
+
+        //mengcopy vektor V utk membandingkan
+        Double[] vektorVSortDesc = Arrays.copyOf(vektorV, vektorV.length);
+
+        System.out.println("\nSorting Vektor V by Descending Sort");
+        Arrays.sort(vektorVSortDesc, Collections.reverseOrder());
+
+        //mencari peringkat pertama
+        int rank1 = 0;
+        int rank2 = 0;
+        int rank3 = 0;
+        for (int i = 0; i < vektorVSortDesc.length; i++) {
+            if (vektorVSortDesc[0].equals(vektorV[i]))
+                rank1 = i;
+        }
+
+        Double[] pathResult = new Double[dfs.temp.get(rank1 - 1).size()];
+
+        //copy element of arraylist in index rank1 to array 1 dim.
+        for (int i = 0; i < pathResult.length; i++) {
+            pathResult[i] = dfs.temp.get(rank1 - 1).get(i);
+        }
+
+        //to get just path, not include criteria
+        Double[] pathResultFix = Arrays.copyOfRange(pathResult, 3, pathResult.length);
+
+        //change double to int
+        int[] pathResultFixInt = new int[pathResultFix.length];
+        for (int i = 0; i < pathResultFixInt.length; i++) {
+            pathResultFixInt[i] = pathResultFix[i].intValue();
+        }
+
+        //String originString = graph.getLongLat()[2];
+
 
         // Setup the MapView
         mapView = findViewById(R.id.mapView);

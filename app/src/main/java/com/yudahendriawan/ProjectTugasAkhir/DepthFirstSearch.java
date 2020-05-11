@@ -1,4 +1,6 @@
-package com.yudahendriawan.directionmapbox;
+package com.yudahendriawan.ProjectTugasAkhir;
+
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,29 +30,37 @@ public class DepthFirstSearch {
         ArrayList<Double> distanceInteger;//"ini"
         ArrayList<Double> roadDensityInteger;
 
+
         //proses DFS
         LinkedList<Node> list = graph.adjacencyList[start];
         for (int i = 0; i < list.size(); i++) {
+            //   Node node = new Node();
             Node node = list.get(i);
+
             sum_of_distance = distance;
             sum_of_road_density = roadDensity;
 
-            if (node.destination != end && visited[node.destination] == false) {
+//            int nodeDestination = Integer.parseInt(node.getDestination());
+//            int nodeSource = Integer.parseInt(node.getSource());
+//            double nodeDistance = Double.parseDouble(node.getDistance());
+//            double nodeRoadDensity = Double.parseDouble(node.getRoadDensity());
+
+            if (node.getDestination() != end && !visited[node.getDestination()]) {
 
                 //menhitung jarak
-                sum_of_distance = sum_of_distance + node.distance;
-                sum_of_road_density = sum_of_road_density + node.roadDensity;
+                sum_of_distance = sum_of_distance + node.getDistance();
+                sum_of_road_density = sum_of_road_density + node.getRoadDensity();
 
                 //rekursif
-                print(graph, node.destination, end, sum_of_distance, sum_of_road_density, newPath, visited);
-            } else if (node.destination == end) {
+                print(graph, node.getDestination(), end, sum_of_distance, sum_of_road_density, newPath, visited);
+            } else if (node.getDestination() == end) {
 
                 //menghitung jarak
-                sum_of_distance = sum_of_distance + node.distance;
-                sum_of_road_density = sum_of_road_density + node.roadDensity;
+                sum_of_distance = sum_of_distance + node.getDistance();
+                sum_of_road_density = sum_of_road_density + node.getRoadDensity();
 
                 //menambahkan wadah dengan node.destination
-                String result = newPath + "," + node.destination;
+                String result = newPath + "," + node.getDestination();
 
                 //menghapus comma pada index 0
                 String real_result = result.substring(1, result.length());
@@ -117,8 +127,17 @@ public class DepthFirstSearch {
     public void printAllPaths(Graph graph, int start, int end) {
         boolean[] visited = new boolean[graph.vertices];
         visited[start] = true;
+        Node node = new Node();
+        Log.d("nodeDFS", node.toString());
         // double distance = 0;
         print(graph, start, end, graph.vertices, graph.vertices, "", visited);
     }
 
+    public ArrayList<ArrayList<Double>> getTemp() {
+        return temp;
+    }
+
+    public void setTemp(ArrayList<ArrayList<Double>> temp) {
+        this.temp = temp;
+    }
 }

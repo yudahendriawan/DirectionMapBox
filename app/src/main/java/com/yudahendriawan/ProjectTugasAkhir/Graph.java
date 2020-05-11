@@ -1,13 +1,41 @@
-package com.yudahendriawan.directionmapbox;
+package com.yudahendriawan.ProjectTugasAkhir;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.yudahendriawan.ProjectTugasAkhir.api.ApiClient;
+import com.yudahendriawan.ProjectTugasAkhir.api.ApiInterface;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
-class Graph {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+class Graph /*implements NodeView*/ {
+    NodeView view;
+    NodePresenter nodePresenter = new NodePresenter(view);
+
+    List<Node> nodes;
     int vertices;
     LinkedList<Node>[] adjacencyList;
+    double[][] data;
+    ArrayList<Node> nodeData;
+
+
+    private static final String BASE_URL = "http://notes-app-by-yuda.000webhostapp.com/";
+
 
     public Graph(int vertices) {
         this.vertices = vertices;
@@ -99,16 +127,8 @@ class Graph {
                 {28, 30, 2800, 1},
                 {30, 28, 2800, 1}
 
-//            {0, 1, 10},
-//            {0, 2, 40},
-//            {1, 2, 30},
-//            {1, 3, 10},
-//            {2, 3, 30},
-//            {3, 4, 10},
-//            {4, 0, 20},
-//            {4, 1, 20},
-//            {4, 5, 30}
         };
+
 
         ArrayList<Node> list = new ArrayList<>();
         for (double[] dataKu : data) {
@@ -123,6 +143,87 @@ class Graph {
             list.add(node);
             adjacencyList[node.getSource()].add(node);
         }
+        Log.d("list", list.toString());
+
+
+    }
+
+    public void addEdgeDB() {
+
+//        view.showLoading();
+
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<List<Node>> call = apiInterface.getNode();
+        //Node node = new Node();
+        Log.d("test", "test");
+        call.enqueue(new Callback<List<Node>>() {
+            @Override
+            public void onResponse(@NotNull Call<List<Node>> call, @NotNull Response<List<Node>> response) {
+                //    nodes = response.body();
+                // Log.d("print",response.body().toString());
+                //  view.hideLoading();
+                Log.d("test2", "berhasil");
+
+//                List<Node> nodes = new ArrayList<>();
+//                nodes = response.body();
+
+
+                if (response.isSuccessful() && response.body() != null) {
+                    data = new double[response.body().size()][4];
+                    Log.d("responseSize", String.valueOf(response.body().size()));
+                    //nodes = response.body();
+                    for (int i = 0; i < response.body().size(); i++) {
+                        //  getAdjacencyList()[nodes.get(i).getSource()].add(nodes.get(i));
+                        data[i][0] = response.body().get(i).getSource();
+                        data[i][1] = response.body().get(i).getDestination();
+                        data[i][2] = response.body().get(i).getDistance();
+                        data[i][3] = response.body().get(i).getRoadDensity();
+
+                    }
+                }
+
+                String dataPrint = "[";
+                for (int i = 0; i < data.length; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        dataPrint = dataPrint + data[i][j] + "";
+                        if (j == 3) {
+                            dataPrint = dataPrint + "],[";
+                        } else {
+                            dataPrint = dataPrint + ",";
+                        }
+                    }
+                    dataPrint = dataPrint + "]";
+                }
+                Log.d("dataPrint", dataPrint);
+                Log.d("responseBody", response.body().toString());
+
+                nodeData = new ArrayList<>();
+                for (double[] dataKu : data) {
+                    Node node = new Node();
+
+                    node.setSource(dataKu[0]);
+                    node.setDestination(dataKu[1]);
+                    node.setDistance(dataKu[2]);
+                    node.setRoadDensity(dataKu[3]);
+
+                    nodeData.add(node);
+                    adjacencyList[node.getSource()].add(node);
+                }
+
+
+            }
+
+
+            @Override
+            public void onFailure(@NotNull Call<List<Node>> call, @NotNull Throwable t) {
+                //   view.hideLoading();
+                view.onErrorLoading(t.getLocalizedMessage());
+                Log.d("test2", "gagal");
+                Log.d("onFailure", t.getLocalizedMessage());
+            }
+        });
+
+
     }
 
     public ArrayList<Double> getListWisata() {
@@ -168,6 +269,14 @@ class Graph {
                 "29", "-7.272280, 112.759526",
                 "30", "-7.245489, 112.769081"};
         return longLat;
+    }
+
+    public LinkedList<Node>[] getAdjacencyList() {
+        return adjacencyList;
+    }
+
+    public void setAdjacencyList(LinkedList<Node>[] adjacencyList) {
+        this.adjacencyList = adjacencyList;
     }
 
 }

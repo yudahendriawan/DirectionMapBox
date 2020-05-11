@@ -1,4 +1,4 @@
-package com.yudahendriawan.directionmapbox;
+package com.yudahendriawan.ProjectTugasAkhir;
 
 public class Criteria {
 

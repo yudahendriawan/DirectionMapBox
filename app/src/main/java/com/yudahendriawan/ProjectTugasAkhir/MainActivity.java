@@ -1,12 +1,16 @@
 package com.yudahendriawan.ProjectTugasAkhir;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -62,7 +66,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
  * Use Mapbox Java Services to request directions from the Mapbox Directions API and show the
  * route with a LineLayer.
  */
-public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
+public class MainActivity extends AppCompatActivity implements NodeView {
 
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
     private MapboxDirections client;
     private Point origin;
     private Point destination;
+
+    ProgressDialog progressDialog;
 
     //   private ProgressBar progressBar;
 
@@ -89,6 +95,9 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
     String routePointList = "";
     String origin_ = "";
     String destination_ = "";
+
+    Button proses, show;
+    EditText inputSource, inputDest;
 
     int vertices = 31;
     Graph graph; /*= new Graph(vertices);*/
@@ -112,40 +121,70 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
 
 //        progressBar = findViewById(R.id.progressBar);
 //        progressBar.setVisibility(View.VISIBLE);
-
-
-        graph = new Graph(vertices);
-        ///addEdgeMain();
-        graph.addEdgeDB();
-        //graph.addEdge();
+        OpenActivity openActivity = new OpenActivity();
+        proses = findViewById(R.id.proses);
+        show = findViewById(R.id.show);
+        inputDest = findViewById(R.id.edt_dest);
+        inputSource = findViewById(R.id.edt_source);
+        graph = new Graph(vertices, this);
         dfs = new DepthFirstSearch();
 
-        dfs.printAllPaths(graph, 0, 3);
-        Toast.makeText(MainActivity.this, "Waiting for the process", Toast.LENGTH_LONG).show();
 
-
-        Timer timer = new Timer();
-// Set the schedule function
-        timer.scheduleAtFixedRate(new TimerTask() {
-                                      @Override
-                                      public void run() {
-                                          weightedProduct();
-
-//                                          showMap(savedInstanceState);
-                                      }
-                                  },
-                0, 3000);
-        if (dfs.getTemp().size() != 0) {
-            timer.cancel();
-        }
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        proses.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                showMap(savedInstanceState, origin, pointList, destination);
+            public void onClick(View v) {
+
+                // Graph graphView = new Graph(this);
+
+                ///addEdgeMain();
+                // graph.addEdgeDB();
+                graph.addEdgeDB();
+                Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
             }
-        }, 3000);
+        });
+
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (graph.adjacencyList != null) {
+//                    int getSource = Integer.parseInt(inputDest.getText().toString());
+//                    int getDest = Integer.parseInt(inputDest.getText().toString());
+
+                    dfs.printAllPaths(graph, 1, 5);
+                    weightedProduct();
+                    showMap(savedInstanceState);
+                } else {
+                    Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+//        Timer timer = new Timer();
+//// Set the schedule function
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//                                      @Override
+//                                      public void run() {
+//
+//
+////                                          showMap(savedInstanceState);
+//                                      }
+//                                  },
+//                0, 3000);
+//        if (dfs.getTemp().size() != 0) {
+//            timer.cancel();
+//        }
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                showMap(savedInstanceState, origin, pointList, destination);
+//            }
+//        }, 3000);
+
+
 
 
         // Log.d("addEdge",graph.addEdge());
@@ -288,13 +327,13 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+        // mapView.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mapView.onStart();
+        //  mapView.onStart();
     }
 
     @Override
@@ -595,9 +634,10 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
         }
     }
 
-    public void showMap(Bundle savedInstanceState, Point origin, List<Point> pointList, Point destination) {
+    public void showMap(Bundle savedInstanceState) {
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+        mapView.onStart();
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull final MapboxMap mapboxMap) {
@@ -681,6 +721,19 @@ public class MainActivity extends AppCompatActivity /*implements NodeView*/ {
                 });
             }
         });
+    }
+
+
+    @Override
+    public void showLoading() {
+//        progressDialog.setMessage("Waiting for response");
+//        progressDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+//        progressDialog.dismiss();
+
     }
 }
 

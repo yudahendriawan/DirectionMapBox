@@ -1,16 +1,24 @@
 package com.yudahendriawan.ProjectTugasAkhir;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yudahendriawan.ProjectTugasAkhir.api.ApiClient;
 import com.yudahendriawan.ProjectTugasAkhir.api.ApiInterface;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,23 +37,39 @@ class Graph /*implements NodeView*/ {
 
     List<Node> nodes;
     int vertices;
-    LinkedList<Node>[] adjacencyList;
-    double[][] data;
+    public LinkedList<Node>[] adjacencyList;
+
+    String halo = "";
+
     ArrayList<Node> nodeData;
+    double[][] data;
+
+    boolean past = false;
+
+    RequestQueue requestQueue;
 
 
     private static final String BASE_URL = "http://notes-app-by-yuda.000webhostapp.com/";
 
 
-    public Graph(int vertices) {
+    public Graph(int vertices, NodeView view) {
         this.vertices = vertices;
+        this.view = view;
         adjacencyList = new LinkedList[vertices];
         for (int i = 0; i < vertices; i++) {
             adjacencyList[i] = new LinkedList<Node>();
         }
     }
 
+    public Graph(LinkedList<Node>[] adjacencyList) {
+        this.adjacencyList = adjacencyList;
+    }
+
     Graph() {
+    }
+
+    public Graph(NodeView view) {
+        this.view = view;
     }
 
     public void addEdge() {
@@ -144,16 +168,19 @@ class Graph /*implements NodeView*/ {
             adjacencyList[node.getSource()].add(node);
         }
         Log.d("list", list.toString());
+        Log.d("adjacencyGraph", getAdjacencyList().toString());
 
 
     }
 
     public void addEdgeDB() {
 
-//        view.showLoading();
+//       view.showLoading();
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<List<Node>> call = apiInterface.getNode();
+        //boolean past = false;
+
         //Node node = new Node();
         Log.d("test", "test");
         call.enqueue(new Callback<List<Node>>() {
@@ -161,7 +188,7 @@ class Graph /*implements NodeView*/ {
             public void onResponse(@NotNull Call<List<Node>> call, @NotNull Response<List<Node>> response) {
                 //    nodes = response.body();
                 // Log.d("print",response.body().toString());
-                //  view.hideLoading();
+                //    view.hideLoading();
                 Log.d("test2", "berhasil");
 
 //                List<Node> nodes = new ArrayList<>();
@@ -169,7 +196,7 @@ class Graph /*implements NodeView*/ {
 
 
                 if (response.isSuccessful() && response.body() != null) {
-                    data = new double[response.body().size()][4];
+                    double[][] data = new double[response.body().size()][4];
                     Log.d("responseSize", String.valueOf(response.body().size()));
                     //nodes = response.body();
                     for (int i = 0; i < response.body().size(); i++) {
@@ -180,34 +207,31 @@ class Graph /*implements NodeView*/ {
                         data[i][3] = response.body().get(i).getRoadDensity();
 
                     }
-                }
+                    getData(data);
+                    halo = "print aku";
+                    past = true;
+                    Log.d("datasize", "data tidak null");
 
-                String dataPrint = "[";
-                for (int i = 0; i < data.length; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        dataPrint = dataPrint + data[i][j] + "";
-                        if (j == 3) {
-                            dataPrint = dataPrint + "],[";
-                        } else {
-                            dataPrint = dataPrint + ",";
+
+//                    setAdjacencyList(getAdjacencyList());
+//                    Log.d("adjacencyGraph", getAdjacencyList().toString());
+                    //    Log.d("nodeDATA", nodeData.toString());
+
+                    String dataPrint = "[";
+                    for (int i = 0; i < data.length; i++) {
+                        for (int j = 0; j < 4; j++) {
+                            dataPrint = dataPrint + data[i][j] + "";
+                            if (j == 3) {
+                                dataPrint = dataPrint + "],[";
+                            } else {
+                                dataPrint = dataPrint + ",";
+                            }
                         }
+                        dataPrint = dataPrint + "]";
                     }
-                    dataPrint = dataPrint + "]";
-                }
-                Log.d("dataPrint", dataPrint);
-                Log.d("responseBody", response.body().toString());
+                    Log.d("dataPrint", dataPrint);
+                    //Log.d("responseBody", response.body().toString());
 
-                nodeData = new ArrayList<>();
-                for (double[] dataKu : data) {
-                    Node node = new Node();
-
-                    node.setSource(dataKu[0]);
-                    node.setDestination(dataKu[1]);
-                    node.setDistance(dataKu[2]);
-                    node.setRoadDensity(dataKu[3]);
-
-                    nodeData.add(node);
-                    adjacencyList[node.getSource()].add(node);
                 }
 
 
@@ -217,7 +241,7 @@ class Graph /*implements NodeView*/ {
             @Override
             public void onFailure(@NotNull Call<List<Node>> call, @NotNull Throwable t) {
                 //   view.hideLoading();
-                view.onErrorLoading(t.getLocalizedMessage());
+                //  view.onErrorLoading(t.getLocalizedMessage());
                 Log.d("test2", "gagal");
                 Log.d("onFailure", t.getLocalizedMessage());
             }
@@ -278,5 +302,55 @@ class Graph /*implements NodeView*/ {
     public void setAdjacencyList(LinkedList<Node>[] adjacencyList) {
         this.adjacencyList = adjacencyList;
     }
+
+    public void getData(double[][] data) {
+        //  adjacencyList = null;
+
+        Log.d("getData", "Method getData()");
+
+        ArrayList<Node> nodeData = new ArrayList<>();
+        for (double[] dataKu : data) {
+            Node node = new Node();
+
+            int first = (int) dataKu[0];
+            int second = (int) dataKu[1];
+//
+            Log.d("first", String.valueOf(first));
+
+            node.setSource(first);
+            node.setDestination(second);
+            node.setDistance(dataKu[2]);
+            node.setRoadDensity(dataKu[3]);
+
+            nodeData.add(node);
+            adjacencyList[node.getSource()].add(node);
+
+        }
+        Log.d("nodeData", nodeData.toString());
+
+    }
+
+//    public void addVolleyData(Context context){
+//
+//        requestQueue= Volley.newRequestQueue(context);
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        // Display the first 500 characters of the response string.
+//                        textView.setText("Response is: "+ response.substring(0,500));
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                textView.setText("That didn't work!");
+//            }
+//        });
+//
+//    });
+//        requestQueue.add(request);
+//
+//    }
 
 }

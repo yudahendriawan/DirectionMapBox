@@ -12,12 +12,17 @@ import java.util.List;
  */
 public class DepthFirstSearch {
 
+    NodeView view;
+
     double sum_of_distance = 0;
     double sum_of_road_density = 0;
     ArrayList<ArrayList<Double>> listOfDistance = new ArrayList<>();//"ini"
     ArrayList<ArrayList<Double>> temp = new ArrayList<>();//"ini"
     ArrayList<Double> listWisata;
     ArrayList<ArrayList<Double>> listOfRoadDensity = new ArrayList<>();
+    double[][] data;
+
+    //Graph g = new Graph(31);
 
     public ArrayList<ArrayList<Double>> print(Graph graph, int start,
                                               int end, double distance, double roadDensity, String path, boolean[] visited) {
@@ -25,7 +30,7 @@ public class DepthFirstSearch {
         //membuat wadah untuk path yang terbentuk
         String newPath = path + "," + start;
         visited[start] = true;
-
+        //   graph.addEdgeDB();
         //inisiasi distanceInteger
         ArrayList<Double> distanceInteger;//"ini"
         ArrayList<Double> roadDensityInteger;
@@ -33,6 +38,7 @@ public class DepthFirstSearch {
 
         //proses DFS
         LinkedList<Node> list = graph.adjacencyList[start];
+        Log.d("adjacency", graph.adjacencyList[start].toString());
         for (int i = 0; i < list.size(); i++) {
             //   Node node = new Node();
             Node node = list.get(i);
@@ -40,10 +46,7 @@ public class DepthFirstSearch {
             sum_of_distance = distance;
             sum_of_road_density = roadDensity;
 
-//            int nodeDestination = Integer.parseInt(node.getDestination());
-//            int nodeSource = Integer.parseInt(node.getSource());
-//            double nodeDistance = Double.parseDouble(node.getDistance());
-//            double nodeRoadDensity = Double.parseDouble(node.getRoadDensity());
+//
 
             if (node.getDestination() != end && !visited[node.getDestination()]) {
 
@@ -127,8 +130,8 @@ public class DepthFirstSearch {
     public void printAllPaths(Graph graph, int start, int end) {
         boolean[] visited = new boolean[graph.vertices];
         visited[start] = true;
-        Node node = new Node();
-        Log.d("nodeDFS", node.toString());
+        Log.d("printaku", graph.halo);
+        //graph.adjacencyList[start];
         // double distance = 0;
         print(graph, start, end, graph.vertices, graph.vertices, "", visited);
     }
@@ -140,4 +143,40 @@ public class DepthFirstSearch {
     public void setTemp(ArrayList<ArrayList<Double>> temp) {
         this.temp = temp;
     }
+
+//    @Override
+//    public void getData(double[][] data) {
+//        Graph graph = new Graph();
+//        this.data = data;
+//
+//        ArrayList<Node> nodeData = new ArrayList<>();
+//        for (double[] dataKu : data) {
+//            Node node = new Node();
+//
+//            int first = (int) dataKu[0];
+//            int second = (int) dataKu[1];
+////
+//            Log.d("first", String.valueOf(first));
+//
+//            node.setSource(first);
+//            node.setDestination(second);
+//            node.setDistance(dataKu[2]);
+//            node.setRoadDensity(dataKu[3]);
+//
+//            nodeData.add(node);
+//            graph.adjacencyList[node.getSource()].add(node);
+//
+//        }
+//        Log.d("nodeData", nodeData.toString());
+//    }
+
+//    public LinkedList<Node>[] getAdjacencyList(){
+//        Graph graph = new Graph();
+//        int vertices = 31;
+//        LinkedList<Node>[] nodes = new LinkedList[vertices];
+//        for(int i = 0; i< vertices; i++){
+//            nodes[i] = graph.getAdjacencyList()[i];
+//        }
+//        return nodes;
+//    }
 }

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -66,7 +68,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
  * Use Mapbox Java Services to request directions from the Mapbox Directions API and show the
  * route with a LineLayer.
  */
-public class MainActivity extends AppCompatActivity implements NodeView {
+public class MainActivity extends AppCompatActivity {
 
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
@@ -81,16 +83,9 @@ public class MainActivity extends AppCompatActivity implements NodeView {
 
     ProgressDialog progressDialog;
 
-    //   private ProgressBar progressBar;
-
     private List<Point> pointList;
     //private List<Node> nodes = new ArrayList();
     private String routeURL;
-
-    NodeView nodeView;
-
-    NodePresenter presenter;
-    //SwipeRefreshLayout srl;
 
     String routePointList = "";
     String origin_ = "";
@@ -117,18 +112,23 @@ public class MainActivity extends AppCompatActivity implements NodeView {
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
 
-//        Node node = new Node();
-//        Log.d("node",node.toString());
-
-//        progressBar = findViewById(R.id.progressBar);
-//        progressBar.setVisibility(View.VISIBLE);
-        OpenActivity openActivity = new OpenActivity();
         proses = findViewById(R.id.proses);
         show = findViewById(R.id.show);
-        inputDest = findViewById(R.id.edt_dest);
-        inputSource = findViewById(R.id.edt_source);
+//        inputDest = findViewById(R.id.edt_dest);
+//        inputSource = findViewById(R.id.edt_source);
+
+        AutoCompleteTextView acSource = findViewById(R.id.autocomplete_source);
+        AutoCompleteTextView acDest = findViewById(R.id.autocomplete_dest);
+        String[] acWisata = getResources().getStringArray(R.array.places_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, acWisata);
+        acSource.setAdapter(adapter);
+        acDest.setAdapter(adapter);
+
+
         graph = new Graph(vertices, this);
         dfs = new DepthFirstSearch();
+        Places place = new Places();
+
 
 
         proses.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NodeView {
                 graph.addEdgeDB();
                 //  graph.getPlacesData();
                 Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
+//                String[] acWisata = new String[place.getType().length()];
+//                for(int i = 0; i<place.getType().length();i++){
+//                    acWisata[i] = place.getType();
+//                }
 
             }
         });
@@ -158,62 +162,6 @@ public class MainActivity extends AppCompatActivity implements NodeView {
             }
         });
 
-
-//        Timer timer = new Timer();
-//// Set the schedule function
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//                                      @Override
-//                                      public void run() {
-//
-//
-////                                          showMap(savedInstanceState);
-//                                      }
-//                                  },
-//                0, 3000);
-//        if (dfs.getTemp().size() != 0) {
-//            timer.cancel();
-//        }
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                showMap(savedInstanceState, origin, pointList, destination);
-//            }
-//        }, 3000);
-
-
-
-
-        // Log.d("addEdge",graph.addEdge());
-
-        //   Log.d("temp", dfs.getTemp().toString());
-
-//        Node node = new Node();
-//        Log.d("node",node.toString());
-
-
-        //Do something after 1000ms
-        //
-
-
-//        else{
-//            Log.d("cektempSize","temp null");
-//            graph.addEdgeDB();
-//        }
-//
-
-//        //String originString = graph.getLongLat()[2];
-//        presenter = new NodePresenter(this);
-//        presenter.getData();
-
-        // Setup the MapView
-
-
-        //  }
-//        else{
-//            Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG).show();
-//        }
     }
 
     /**
@@ -368,93 +316,6 @@ public class MainActivity extends AppCompatActivity implements NodeView {
         mapView.onLowMemory();
     }
 
-
-    /*@Override
-    public void showLoading() {
-
-       // NodeView.progressBar.setVisibility(View.VISIBLE);
-
-
-    }
-
-    @Override
-    public void hideLoading() {
-       // progressBar.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void onErrorLoading(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }*/
-
-//    void addEdgeMain() {
-//
-//        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//        Call<List<Node>> call = apiInterface.getNode();
-//        //Node node = new Node();
-//
-//
-//        Log.d("test", "test");
-//        call.enqueue(new Callback<List<Node>>() {
-//            @Override
-//            public void onResponse(@NonNull Call<List<Node>> call, @NonNull Response<List<Node>> response) {
-//                //    nodes = response.body();
-//                // Log.d("print",response.body().toString());
-//                Log.d("test2", "berhasil");
-//                ArrayList<Node> nodes = new ArrayList<>();
-//                if (response.isSuccessful() && response.body() != null) {
-//
-//
-//                    for (Node nodeku : response.body()) {
-//
-//                        Node node = new Node();
-//                        node.setSource(nodeku.getSource());
-//                        node.setDistance(nodeku.getDistance());
-//                        node.setDestination(nodeku.getDestination());
-//                        node.setRoadDensity(nodeku.getRoadDensity());
-//
-//                        nodes.add(node);
-//                        graph.getAdjacencyList()[node.getSource()].add(node);
-//
-//                    }
-//                }
-//                Log.d("nodes", nodes.toString());
-//                // Log.d("nodes",nodes.get(0).getSource());
-////                if (response.isSuccessful() && response.body() != null) {
-////                    //   List<Node> nodeKu = new ArrayList<>();
-////                    //   nodes = response.body();
-////
-////                    ArrayList<Node> nodes = new ArrayList<>();
-////                    nodes = response.body();
-////                   // adjacencyList[nodes.get(i)]
-////                   // nodes = response.body();
-////                    Log.d("print", nodes.toString());
-////                    Log.d("getSource", String.valueOf(nodes.get(0).getSource()));
-////                    for (int i = 0; i < response.body().size(); i++) {
-////                        //nodeKu.get(i). = response.body().get(i);
-//////                        Node node = new Node();
-//////
-//////                        node.setSource(response.body().get(i).getSource());
-//////                        node.setDestination(response.body().get(i).getDestination());
-//////                        node.setDistance(response.body().get(i).getDistance());
-//////                        node.setRoadDensity(response.body().get(i).getRoadDensity());
-//////
-//////                        nodes.add(node);
-////                        adjacencyList[nodes.get(i).getSource()].add(nodes.get(i));
-//////
-////                    }
-//
-//            }
-//
-//
-//            @Override
-//            public void onFailure(@NonNull Call<List<Node>> call, @NonNull Throwable t) {
-//                Log.d("test2", "gagal");
-//                Log.d("onFailure", t.getLocalizedMessage());
-//            }
-//        });
-//    }
 
     public void weightedProduct() {
         if (dfs.getTemp().size() != 0) {
@@ -719,19 +580,6 @@ public class MainActivity extends AppCompatActivity implements NodeView {
                 });
             }
         });
-    }
-
-
-    @Override
-    public void showLoading() {
-//        progressDialog.setMessage("Waiting for response");
-//        progressDialog.show();
-    }
-
-    @Override
-    public void hideLoading() {
-//        progressDialog.dismiss();
-
     }
 }
 

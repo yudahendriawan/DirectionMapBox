@@ -30,27 +30,6 @@ public class Node {
 
     private ArrayList<Node> node;
 
-
-//    @Expose
-//    @SerializedName("id")
-//    private String id;
-//
-//    @Expose
-//    @SerializedName("source")
-//    private String source;
-//
-//    @Expose
-//    @SerializedName("destination")
-//    private String destination;
-//
-//    @Expose
-//    @SerializedName("distance")
-//    private String distance;
-//
-//    @Expose
-//    @SerializedName("roadDensity")
-//    private String roadDensity;
-
     public Node(int source, int destination) {
         this.source = source;
         this.destination = destination;
@@ -137,47 +116,4 @@ public class Node {
                 ", roadDensity=" + roadDensity +
                 '}';
     }
-
-    //BATAS
-
-
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
-//
-//    public String getSource() {
-//        return source;
-//    }
-//
-//    public void setSource(String source) {
-//        this.source = source;
-//    }
-//
-//    public String getDestination() {
-//        return destination;
-//    }
-//
-//    public void setDestination(String destination) {
-//        this.destination = destination;
-//    }
-//
-//    public String getDistance() {
-//        return distance;
-//    }
-//
-//    public void setDistance(String distance) {
-//        this.distance = distance;
-//    }
-//
-//    public String getRoadDensity() {
-//        return roadDensity;
-//    }
-//
-//    public void setRoadDensity(String roadDensity) {
-//        this.roadDensity = roadDensity;
-//    }
 }

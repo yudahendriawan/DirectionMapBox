@@ -31,9 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-class Graph /*implements NodeView*/ {
-    NodeView view;
-    NodePresenter nodePresenter = new NodePresenter(view);
+class Graph {
 
     List<Node> nodes;
     int vertices;
@@ -53,9 +51,7 @@ class Graph /*implements NodeView*/ {
     Context context;
 
     String[] latLong;
-
-
-    private static final String BASE_URL = "http://notes-app-by-yuda.000webhostapp.com/";
+    String[] listWisata;
 
 
     public Graph(int vertices, Context context) {
@@ -72,10 +68,6 @@ class Graph /*implements NodeView*/ {
     }
 
     Graph() {
-    }
-
-    public Graph(NodeView view) {
-        this.view = view;
     }
 
     public void addEdge() {
@@ -348,6 +340,7 @@ class Graph /*implements NodeView*/ {
                 if (response.isSuccessful() && response.body() != null) {
                     ArrayList<Double> dataWisata = new ArrayList<>();
                     String[] dataLatLing = new String[62];
+                    String[] wisataKu = new String[response.body().size()];
                     //int p = 0;
                     int p = 0;
                     for (int i = 0; i < response.body().size(); i++) {
@@ -355,6 +348,7 @@ class Graph /*implements NodeView*/ {
                             Double numberDouble = new Double(response.body().get(i).getNumber());
                             dataWisata.add(numberDouble);
                             Log.d("numberDouble", numberDouble.toString() + ",");
+                            wisataKu[i] = response.body().get(i).getName();
                         }
 
                     }
@@ -364,6 +358,9 @@ class Graph /*implements NodeView*/ {
                         dataLatLing[i + 1] = response.body().get(p).getLatitude() + "," + response.body().get(p).getLongitude();
                         p++;
                     }
+
+                    setListWisata(wisataKu);
+
                     setWisata(dataWisata);
                     setLatLong(dataLatLing);
 
@@ -406,5 +403,9 @@ class Graph /*implements NodeView*/ {
 
     public void setLatLong(String[] latLong) {
         this.latLong = latLong;
+    }
+
+    public void setListWisata(String[] listWisata) {
+        this.listWisata = listWisata;
     }
 }

@@ -2,4 +2,41 @@
     <string name="app_name">ProjectTugasAkhir</string>
     <string name="access_token">pk.eyJ1IjoieXVkYWhlbmRyaWF3YW4iLCJhIjoiY2s4b2ptOHByMWEyNzNsbXdjanltN2xlaCJ9.0r0zAhruVi38HkTTtYIs1A</string>
     <string name="directions_activity_toast_message">Yeah</string>
+
+
+    <string-array name="places_array">
+        <item>Taman Harmoni</item>
+        <item>Perlimaan Keputih Tegal Timur</item>
+        <item>Pertigaan Keputih Perintis</item>
+        <item>Bunderan Pakuwon</item>
+        <item>Food Festival Pakuwon City</item>
+        <item>East Cost Pakuwon</item>
+        <item>Bunderan Mulyos-Raya ITS-Kenjeran</item>
+        <item>Sakinah Supermarket</item>
+        <item>Perempatan Kenjeran</item>
+        <item>Atlatis Land</item>
+        <item>Pantai Ria Kenjeran</item>
+        <item>Klenteng Sanggar Agung</item>
+        <item>Pertigaan dekat RS Mitra</item>
+        <item>Perempatan Kertajaya Indah</item>
+        <item>Bunderan ITS</item>
+        <item>Pertigaan Puker/Superindo</item>
+        <item>Perempatan MERR</item>
+        <item>Perempatan Kedung Baruk-Ir Soekarno</item>
+        <item>Museum Teknoform Undika</item>
+        <item>Kebun Bibit Wonorejo</item>
+        <item>Taman Kunang-kunang</item>
+        <item>Perempatan Nginden-Jemurasi</item>
+        <item>Taman Flora</item>
+        <item>Pasar Bunga Bratang</item>
+        <item>Bunderan ITS Manyar</item>
+        <item>Perempatan Menur-K. Menjangan-Kertajaya</item>
+        <item>Pertigaan Prof Dr Moestopo</item>
+        <item>Museum Pendidikan Kedokteran UNAIR</item>
+        <item>Perempatan Dharmawangsa-Prof D Moestopo</item>
+        <item>Museum dan Pusat Kajian Etno Grafi</item>
+        <item>Perempatan Kenjeran Kedung Cowek</item>
+
+    </string-array>
 </resources>
+

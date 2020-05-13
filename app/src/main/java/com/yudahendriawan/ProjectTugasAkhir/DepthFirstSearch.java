@@ -11,9 +11,6 @@ import java.util.List;
  * @author user
  */
 public class DepthFirstSearch {
-
-    NodeView view;
-
     double sum_of_distance = 0;
     double sum_of_road_density = 0;
     ArrayList<ArrayList<Double>> listOfDistance = new ArrayList<>();//"ini"
@@ -21,9 +18,6 @@ public class DepthFirstSearch {
     ArrayList<Double> listWisata;
     ArrayList<ArrayList<Double>> listOfRoadDensity = new ArrayList<>();
     double[][] data;
-    //Graph g = new Graph();
-
-    //Graph g = new Graph(31);
 
     public ArrayList<ArrayList<Double>> print(Graph graph, int start,
                                               int end, double distance, double roadDensity, String path, boolean[] visited) {
@@ -36,8 +30,6 @@ public class DepthFirstSearch {
         ArrayList<Double> distanceInteger;//"ini"
         ArrayList<Double> roadDensityInteger;
         boolean test = true;
-
-
 
         //proses DFS
         LinkedList<Node> list = graph.adjacencyList[start];

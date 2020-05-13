@@ -52,6 +52,7 @@ class Graph {
 
     String[] latLong;
     String[] listWisata;
+    private String[] wisataSourceDest;
 
 
     public Graph(int vertices, Context context) {
@@ -342,6 +343,8 @@ class Graph {
                     String[] dataLatLing = new String[62];
                     String[] wisataKu = new String[response.body().size()];
                     //int p = 0;
+
+                    String[] wisataForSD = new String[62];
                     int p = 0;
                     for (int i = 0; i < response.body().size(); i++) {
                         if (response.body().get(i).getType().equals("wisata")) {
@@ -356,8 +359,16 @@ class Graph {
                     for (int i = 0; i < dataLatLing.length; i = i + 2) {
                         dataLatLing[i] = response.body().get(p).getNumber() + "";
                         dataLatLing[i + 1] = response.body().get(p).getLatitude() + "," + response.body().get(p).getLongitude();
+
+
+                        wisataForSD[i] = response.body().get(p).getNumber() + "";
+                        wisataForSD[i + 1] = response.body().get(p).getName();
+
+
                         p++;
                     }
+
+                    setWisataSourceDest(wisataForSD);
 
                     setListWisata(wisataKu);
 
@@ -407,5 +418,13 @@ class Graph {
 
     public void setListWisata(String[] listWisata) {
         this.listWisata = listWisata;
+    }
+
+    public String[] getWisataSourceDest() {
+        return wisataSourceDest;
+    }
+
+    public void setWisataSourceDest(String[] wisataSourceDest) {
+        this.wisataSourceDest = wisataSourceDest;
     }
 }

@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
     EditText inputSource, inputDest;
 
     int vertices = 31;
+    int getSource;
+    int getDest;
 
     Graph graph; /*= new Graph(vertices);*/
     Graph g = new Graph();
@@ -150,10 +152,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (graph.adjacencyList != null) {
-//                    int getSource = Integer.parseInt(inputDest.getText().toString());
-//                    int getDest = Integer.parseInt(inputDest.getText().toString());
+//                    int getSource = Integer.parseInt(acSource.getText().toString());
+//                    int getDest = Integer.parseInt(ac.getText().toString());
+                    pointList = null;
 
-                    dfs.printAllPaths(graph, 1, 5);
+                    for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
+                        if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                            getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
+                            Log.d("getSource", String.valueOf(getSource));
+                        }
+                        if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                            getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
+                            Log.d("getSource", String.valueOf(getDest));
+                        }
+                    }
+                    dfs.printAllPaths(graph, getSource, getDest);
                     weightedProduct();
                     showMap(savedInstanceState);
                 } else {
@@ -320,6 +333,11 @@ public class MainActivity extends AppCompatActivity {
     public void weightedProduct() {
         if (dfs.getTemp().size() != 0) {
 
+            origin_ = "";
+            destination_ = "";
+            routePointList = "";
+            pointList = null;
+
             //akan digunakan utk menampung criteria
             Double[][] data = new Double[dfs.getTemp().size()][3];
             Log.d("tempSize", String.valueOf(dfs.getTemp().size()));
@@ -456,16 +474,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-
+            Double latitudeOrigin;
+            Double longitudeOrigin;
             // for(String s : Arrays.asList(origin_.split(","))){
-            Double latitudeOrigin = Double.valueOf(origin_.split(",")[0]);
-            Double longitudeOrigin = Double.valueOf(origin_.split(",")[1]);
+            latitudeOrigin = Double.valueOf(origin_.split(",")[0]);
+            longitudeOrigin = Double.valueOf(origin_.split(",")[1]);
             origin = Point.fromLngLat(longitudeOrigin, latitudeOrigin);
             //  }
 
+            Double latitudeDest;
+            Double longitudeDest;
             //  for(String s : Arrays.asList(destination_.split(","))){
-            Double latitudeDest = Double.valueOf(destination_.split(",")[0]);
-            Double longitudeDest = Double.valueOf(destination_.split(",")[1]);
+            latitudeDest = Double.valueOf(destination_.split(",")[0]);
+            longitudeDest = Double.valueOf(destination_.split(",")[1]);
             destination = Point.fromLngLat(longitudeDest, latitudeDest);
             // }
 
@@ -480,9 +501,11 @@ public class MainActivity extends AppCompatActivity {
             routeURL = "-7.247226, 112.802257/-7.249400, 112.800501";
 
             pointList = new ArrayList<>();
+            Double latitude;
+            Double longitude;
             for (String s : Arrays.asList(routePointList.split("/"))) {
-                Double latitude = Double.valueOf(s.split(",")[0]);
-                Double longitude = Double.valueOf(s.split(",")[1]);
+                latitude = Double.valueOf(s.split(",")[0]);
+                longitude = Double.valueOf(s.split(",")[1]);
                 pointList.add(Point.fromLngLat(longitude, latitude));
             }
 

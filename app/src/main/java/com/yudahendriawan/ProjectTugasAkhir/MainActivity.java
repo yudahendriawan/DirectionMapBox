@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NodeView {
     EditText inputSource, inputDest;
 
     int vertices = 31;
+
     Graph graph; /*= new Graph(vertices);*/
     Graph g = new Graph();
     DepthFirstSearch dfs; /*= new DepthFirstSearch();*/
@@ -133,13 +134,10 @@ public class MainActivity extends AppCompatActivity implements NodeView {
         proses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Graph graphView = new Graph(this);
-
-                ///addEdgeMain();
-                // graph.addEdgeDB();
                 graph.addEdgeDB();
+                //  graph.getPlacesData();
                 Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -576,22 +574,22 @@ public class MainActivity extends AppCompatActivity implements NodeView {
 
 
             for (int i = 0; i < pathResultFixInt.length; i++) {
-                for (int j = 0; j < graph.getLongLat().length; j++) {
+                for (int j = 0; j < graph.getLatLong().length; j++) {
                     if (i > 0 && i < pathResultFixInt.length - 1) {
-                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j])) {
-                            routePointList = routePointList + graph.getLongLat()[j + 1];
+                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLatLong()[j])) {
+                            routePointList = routePointList + graph.getLatLong()[j + 1];
                             if (i != pathResultFixInt.length - 2) {
                                 routePointList = routePointList + "/";
                             }
                         }
                     }
                     if (i == 0) {
-                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j]))
-                            origin_ = origin_ + graph.getLongLat()[j + 1];
+                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLatLong()[j]))
+                            origin_ = origin_ + graph.getLatLong()[j + 1];
                     }
                     if (i == pathResultFixInt.length - 1) {
-                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLongLat()[j]))
-                            destination_ = destination_ + graph.getLongLat()[j + 1];
+                        if (String.valueOf(pathResultFixInt[i]).equals(graph.getLatLong()[j]))
+                            destination_ = destination_ + graph.getLatLong()[j + 1];
                     }
 
                 }

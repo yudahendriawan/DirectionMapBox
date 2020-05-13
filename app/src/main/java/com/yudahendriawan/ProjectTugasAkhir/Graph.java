@@ -48,13 +48,19 @@ class Graph /*implements NodeView*/ {
 
     RequestQueue requestQueue;
 
+    ArrayList<Double> wisata;
+
+    Context context;
+
+    String[] latLong;
+
 
     private static final String BASE_URL = "http://notes-app-by-yuda.000webhostapp.com/";
 
 
-    public Graph(int vertices, NodeView view) {
+    public Graph(int vertices, Context context) {
         this.vertices = vertices;
-        this.view = view;
+        this.context = context;
         adjacencyList = new LinkedList[vertices];
         for (int i = 0; i < vertices; i++) {
             adjacencyList[i] = new LinkedList<Node>();
@@ -180,7 +186,7 @@ class Graph /*implements NodeView*/ {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<List<Node>> call = apiInterface.getNode();
         //boolean past = false;
-
+        getPlacesData();
         //Node node = new Node();
         Log.d("test", "test");
         call.enqueue(new Callback<List<Node>>() {
@@ -232,6 +238,7 @@ class Graph /*implements NodeView*/ {
                     Log.d("dataPrint", dataPrint);
                     //Log.d("responseBody", response.body().toString());
 
+
                 }
 
 
@@ -259,7 +266,7 @@ class Graph /*implements NodeView*/ {
         return listWisata;
     }
 
-    public String[] getLongLat() {
+    public String[] getLongLatLong() {
         String[] longLat = {
                 "0", "-7.294455, 112.803655",
                 "1", "-7.291139, 112.801781",
@@ -324,33 +331,80 @@ class Graph /*implements NodeView*/ {
 
             nodeData.add(node);
             adjacencyList[node.getSource()].add(node);
+            Toast.makeText(context, "Get Data Succes", Toast.LENGTH_SHORT).show();
 
         }
         Log.d("nodeData", nodeData.toString());
 
     }
 
-//    public void addVolleyData(Context context){
-//
-//        requestQueue= Volley.newRequestQueue(context);
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                        textView.setText("Response is: "+ response.substring(0,500));
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                textView.setText("That didn't work!");
-//            }
-//        });
-//
-//    });
-//        requestQueue.add(request);
-//
-//    }
+    public void getPlacesData() {
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<List<Places>> call = apiInterface.getPlaces();
 
+        call.enqueue(new Callback<List<Places>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Double> dataWisata = new ArrayList<>();
+                    String[] dataLatLing = new String[62];
+                    //int p = 0;
+                    int p = 0;
+                    for (int i = 0; i < response.body().size(); i++) {
+                        if (response.body().get(i).getType().equals("wisata")) {
+                            Double numberDouble = new Double(response.body().get(i).getNumber());
+                            dataWisata.add(numberDouble);
+                            Log.d("numberDouble", numberDouble.toString() + ",");
+                        }
+
+                    }
+                    //int p = 0;
+                    for (int i = 0; i < dataLatLing.length; i = i + 2) {
+                        dataLatLing[i] = response.body().get(p).getNumber() + "";
+                        dataLatLing[i + 1] = response.body().get(p).getLatitude() + "," + response.body().get(p).getLongitude();
+                        p++;
+                    }
+                    setWisata(dataWisata);
+                    setLatLong(dataLatLing);
+
+
+                    String printLangLot = "";
+                    for (int i = 0; i < getLatLong().length; i++) {
+                        printLangLot += dataLatLing[i] + ",";
+                    }
+                    Log.d("LatLong", printLangLot);
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    public ArrayList<Double> getWisata() {
+        return wisata;
+    }
+
+    public void setWisata(ArrayList<Double> wisata) {
+
+        this.wisata = wisata;
+    }
+
+    public void wisataPlaces(ArrayList<Double> listWisata) {
+        wisata = listWisata;
+        Log.d("wisata", wisata.toString());
+        setWisata(wisata);
+
+    }
+
+    public String[] getLatLong() {
+        return latLong;
+    }
+
+    public void setLatLong(String[] latLong) {
+        this.latLong = latLong;
+    }
 }

@@ -2,6 +2,7 @@ package com.yudahendriawan.ProjectTugasAkhir.api;
 
 
 import com.yudahendriawan.ProjectTugasAkhir.Node;
+import com.yudahendriawan.ProjectTugasAkhir.Places;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,4 +14,7 @@ public interface ApiInterface {
 
     @GET("edge.php")
     Call<List<Node>> getNode();
+
+    @GET("places.php")
+    Call<List<Places>> getPlaces();
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.yudahendriawan.ProjectTugasAkhir.MainActivity">
 
@@ -22,29 +23,68 @@
             android:id="@+id/show"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Show" />
+            android:text="Bobot" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+
         android:orientation="horizontal">
 
-        <AutoCompleteTextView
-            android:id="@+id/autocomplete_source"
-            android:layout_height="50dp"
-            android:hint="Fill your source"
-            android:layout_width="200dp" />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
-        <AutoCompleteTextView
-            android:id="@+id/autocomplete_dest"
-            android:layout_height="50dp"
-            android:hint="Fill your destination"
-            android:layout_width="200dp" />
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_source"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Fill your source" />
 
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_dest"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Fill your destination" />
+            <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+            <!--            android:layout_width="20dp"-->
+            <!--            android:layout_height="20dp"/>-->
+        </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/show_arrow"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="fill"
+
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="29dp"
+                android:layout_marginRight="29dp"
+                android:layout_marginBottom="17dp"
+                android:src="@drawable/arrow_proses"
+
+                />
+        </RelativeLayout>
     </LinearLayout>
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -53,6 +93,14 @@
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat="-7.285"
         mapbox:mapbox_cameraTargetLng="112.795"
-        mapbox:mapbox_cameraZoom="10" />
+        mapbox:mapbox_cameraZoom="10">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            mapbox:rippleColor="@color/colorAccent"
+            android:layout_gravity="bottom" />
+    </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

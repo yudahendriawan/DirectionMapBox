@@ -1,21 +1,23 @@
 package com.yudahendriawan.ProjectTugasAkhir;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Path;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -36,8 +38,6 @@ import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.yudahendriawan.ProjectTugasAkhir.api.ApiClient;
-import com.yudahendriawan.ProjectTugasAkhir.api.ApiInterface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,8 +46,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button proses, show;
     EditText inputSource, inputDest;
+    FloatingActionButton show_arrow;
 
     int vertices = 31;
     int getSource;
@@ -102,6 +101,19 @@ public class MainActivity extends AppCompatActivity {
     Graph g = new Graph();
     DepthFirstSearch dfs; /*= new DepthFirstSearch();*/
     boolean repeat = false;
+
+    Toolbar toolbar;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    EditText inputBobotJarak, inputBobotWisata, inputBobotKepadatan;
+
+    int bobotJarak;
+    int bobotWisata;
+    int bobotKepadatan;
+
+    String jrk;
+    String wst;
+    String pdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +126,16 @@ public class MainActivity extends AppCompatActivity {
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         proses = findViewById(R.id.proses);
         show = findViewById(R.id.show);
+        show_arrow = findViewById(R.id.show_arrow);
+
 //        inputDest = findViewById(R.id.edt_dest);
 //        inputSource = findViewById(R.id.edt_source);
 
@@ -130,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
         graph = new Graph(vertices, this);
         dfs = new DepthFirstSearch();
         Places place = new Places();
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogForm();
+            }
+        });
 
 
 
@@ -148,13 +175,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        show.setOnClickListener(new View.OnClickListener() {
+        show_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (graph.adjacencyList != null) {
+                if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
 //                    int getSource = Integer.parseInt(acSource.getText().toString());
 //                    int getDest = Integer.parseInt(ac.getText().toString());
-                    pointList = null;
 
                     for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
                         if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
@@ -170,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     weightedProduct();
                     showMap(savedInstanceState);
                 } else {
+                    Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
                     Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
                 }
             }
@@ -336,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
             origin_ = "";
             destination_ = "";
             routePointList = "";
-            pointList = null;
+
 
             //akan digunakan utk menampung criteria
             Double[][] data = new Double[dfs.getTemp().size()][3];
@@ -373,9 +400,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //inisisasi bobot pada setiap kriteria
-            int bobotJarak = 5;
-            int bobotWisata = 3;
-            int bobotKepadatan = 2;
+
             double totalBobot = bobotJarak + bobotKepadatan + bobotWisata;
 
             //Penormalan Bobot
@@ -534,8 +559,10 @@ public class MainActivity extends AppCompatActivity {
                             // Get the directions route from the Mapbox Directions API
                             getRoute(mapboxMap, origin, pointList, destination);
 
-                        }
 
+                        }
+                        pointList.clear();
+                        Log.d("pointList clear", pointList.toString());
                         mapboxMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(-7.295, 112.802))
                                 .title("Taman Harmoni"));
@@ -603,6 +630,56 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void kosong() {
+        inputBobotKepadatan.setText("");
+        inputBobotWisata.setText("");
+        inputBobotJarak.setText("");
+    }
+
+    public void dialogForm() {
+        bobotJarak = 0;
+        bobotKepadatan = 0;
+        bobotWisata = 0;
+
+        dialog = new AlertDialog.Builder(MainActivity.this);
+        inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.form_bobot, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+        // dialog.setIcon(R.mipmap.ic_launcher);
+        // dialog.setTitle("Input Bobot");
+
+        inputBobotJarak = dialogView.findViewById(R.id.bobotJarak);
+        inputBobotWisata = dialogView.findViewById(R.id.bobotWisata);
+        inputBobotKepadatan = dialogView.findViewById(R.id.bobotKepadatan);
+
+        kosong();
+
+        dialog.setPositiveButton("Submit", (dialog, which) -> {
+//            jrk = inputBobotJarak.getText().toString();
+//            wst = inputBobotWisata.getText().toString();
+//            pdt = inputBobotWisata.getText().toString();
+
+            bobotJarak = Integer.parseInt(inputBobotJarak.getText().toString());
+            bobotWisata = Integer.parseInt(inputBobotWisata.getText().toString());
+            bobotKepadatan = Integer.parseInt(inputBobotKepadatan.getText().toString());
+
+            Log.d("bobot", bobotJarak + "," + bobotWisata + "," + bobotKepadatan);
+
+            dialog.dismiss();
+        });
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 }
 

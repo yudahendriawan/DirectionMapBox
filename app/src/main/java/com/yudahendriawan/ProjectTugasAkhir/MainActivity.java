@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button proses, show;
     EditText inputSource, inputDest;
-    FloatingActionButton show_arrow;
+    Button show_arrow;
 
     int vertices = 31;
     int getSource;
@@ -722,11 +722,11 @@ public class MainActivity extends AppCompatActivity {
                 //String text = parent.getItemAtPosition(position).toString();
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
-                    bobotJarak = 20;
+                    bobotJarak = 50;
                 } else if (item == 2) {
-                    bobotWisata = 20;
+                    bobotWisata = 50;
                 } else if (item == 3) {
-                    bobotKepadatan = 20;
+                    bobotKepadatan = 50;
                 }
             }
 

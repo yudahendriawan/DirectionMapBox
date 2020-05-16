@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private Point destination;
 
     ProgressDialog progressDialog;
+    Spinner spinner1, spinner2, spinner3;
 
     private List<Point> pointList;
     //private List<Node> nodes = new ArrayList();
@@ -157,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                 dialogForm();
             }
         });
-
 
 
         proses.setOnClickListener(new View.OnClickListener() {
@@ -638,7 +640,53 @@ public class MainActivity extends AppCompatActivity {
         inputBobotJarak.setText("");
     }
 
+//    public void dialogForm() {
+//        bobotJarak = 0;
+//        bobotKepadatan = 0;
+//        bobotWisata = 0;
+//
+//        dialog = new AlertDialog.Builder(MainActivity.this);
+//        inflater = getLayoutInflater();
+//        View dialogView = inflater.inflate(R.layout.form_bobot, null);
+//        dialog.setView(dialogView);
+//        dialog.setCancelable(true);
+//        // dialog.setIcon(R.mipmap.ic_launcher);
+//        // dialog.setTitle("Input Bobot");
+//
+//        inputBobotJarak = dialogView.findViewById(R.id.bobotJarak);
+//        inputBobotWisata = dialogView.findViewById(R.id.bobotWisata);
+//        inputBobotKepadatan = dialogView.findViewById(R.id.bobotKepadatan);
+//
+//        kosong();
+//
+//        dialog.setPositiveButton("Submit", (dialog, which) -> {
+////            jrk = inputBobotJarak.getText().toString();
+////            wst = inputBobotWisata.getText().toString();
+////            pdt = inputBobotWisata.getText().toString();
+//
+//            bobotJarak = Integer.parseInt(inputBobotJarak.getText().toString());
+//            bobotWisata = Integer.parseInt(inputBobotWisata.getText().toString());
+//            bobotKepadatan = Integer.parseInt(inputBobotKepadatan.getText().toString());
+//
+//            Log.d("bobot", bobotJarak + "," + bobotWisata + "," + bobotKepadatan);
+//
+//            dialog.dismiss();
+//        });
+//
+//        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        dialog.show();
+//
+//    }
+
     public void dialogForm() {
+        //  Spinner
+
         bobotJarak = 0;
         bobotKepadatan = 0;
         bobotWisata = 0;
@@ -651,34 +699,113 @@ public class MainActivity extends AppCompatActivity {
         // dialog.setIcon(R.mipmap.ic_launcher);
         // dialog.setTitle("Input Bobot");
 
-        inputBobotJarak = dialogView.findViewById(R.id.bobotJarak);
-        inputBobotWisata = dialogView.findViewById(R.id.bobotWisata);
-        inputBobotKepadatan = dialogView.findViewById(R.id.bobotKepadatan);
 
-        kosong();
+        spinner1 = dialogView.findViewById(R.id.spinnerPriority1);
+        spinner2 = dialogView.findViewById(R.id.spinnerPriority2);
+        spinner3 = dialogView.findViewById(R.id.spinnerPriority3);
 
-        dialog.setPositiveButton("Submit", (dialog, which) -> {
-//            jrk = inputBobotJarak.getText().toString();
-//            wst = inputBobotWisata.getText().toString();
-//            pdt = inputBobotWisata.getText().toString();
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.bobot1, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter1);
 
-            bobotJarak = Integer.parseInt(inputBobotJarak.getText().toString());
-            bobotWisata = Integer.parseInt(inputBobotWisata.getText().toString());
-            bobotKepadatan = Integer.parseInt(inputBobotKepadatan.getText().toString());
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.bobot2, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter2);
 
-            Log.d("bobot", bobotJarak + "," + bobotWisata + "," + bobotKepadatan);
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.bobot3, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner3.setAdapter(adapter3);
 
-            dialog.dismiss();
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //String text = parent.getItemAtPosition(position).toString();
+                int item = parent.getSelectedItemPosition();
+                if (item == 1) {
+                    bobotJarak = 20;
+                } else if (item == 2) {
+                    bobotWisata = 20;
+                } else if (item == 3) {
+                    bobotKepadatan = 20;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int item = parent.getSelectedItemPosition();
+                if (item == 1) {
+                    bobotJarak = 10;
+                } else if (item == 2) {
+                    bobotWisata = 10;
+                } else if (item == 3) {
+                    bobotKepadatan = 10;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int item = parent.getSelectedItemPosition();
+                if (item == 1) {
+                    bobotJarak = 1;
+                } else if (item == 2) {
+                    bobotWisata = 1;
+                } else if (item == 3) {
+                    bobotKepadatan = 1;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        dialog.setPositiveButton("OK", (dialog, which) -> {
+            if (spinner1.getSelectedItem().toString().equals(spinner2.getSelectedItem().toString())) {
+                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                dialogForm();
+            } else if (spinner2.getSelectedItem().toString().equals(spinner3.getSelectedItem().toString())) {
+                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                dialogForm();
+            } else if (spinner1.getSelectedItem().toString().equals(spinner3.getSelectedItem().toString())) {
+                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                dialogForm();
+            } else if (spinner1.getSelectedItem().equals("Choose Priority-1") || spinner2.getSelectedItem().equals("Choose Priority-2")
+                    || spinner3.getSelectedItem().equals("Choose Priority-3")) {
+                Toast.makeText(dialogView.getContext(), "Priority harus diisi", Toast.LENGTH_SHORT).show();
+                dialogForm();
+            } else {
+                String bobot = "Jarak : " + bobotJarak + ", Wisata : " + bobotWisata + ", Kepadatan : " + bobotKepadatan;
+                Log.d("bobot", bobot);
+                dialog.dismiss();
+            }
         });
 
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 dialog.dismiss();
+
             }
         });
 
         dialog.show();
+
 
     }
 }

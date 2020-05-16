@@ -38,5 +38,26 @@
         <item>Perempatan Kenjeran Kedung Cowek</item>
 
     </string-array>
+
+    <string-array name="bobot1">
+        <item>Choose Priority-1</item>
+        <item>Jarak</item>
+        <item>Wisata</item>
+        <item>Kepadatan Jalan</item>
+    </string-array>
+
+    <string-array name="bobot2">
+        <item>Choose Priority-2</item>
+        <item>Jarak</item>
+        <item>Wisata</item>
+        <item>Kepadatan Jalan</item>
+    </string-array>
+
+    <string-array name="bobot3">
+        <item>Choose Priority-3</item>
+        <item>Jarak</item>
+        <item>Wisata</item>
+        <item>Kepadatan Jalan</item>
+    </string-array>
 </resources>
 

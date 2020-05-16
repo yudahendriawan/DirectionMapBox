@@ -1,4 +1,4 @@
-package com.yudahendriawan.ProjectTugasAkhir;
+package com.yudahendriawan.ProjectTugasAkhir.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -2,6 +2,8 @@ package com.yudahendriawan.ProjectTugasAkhir;
 
 import android.util.Log;
 
+import com.yudahendriawan.ProjectTugasAkhir.model.Node;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;

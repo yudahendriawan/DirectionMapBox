@@ -1,4 +1,4 @@
-package com.yudahendriawan.ProjectTugasAkhir;
+package com.yudahendriawan.ProjectTugasAkhir.model;
 
 public class Criteria {
 

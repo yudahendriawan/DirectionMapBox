@@ -1,10 +1,9 @@
 package com.yudahendriawan.ProjectTugasAkhir.api;
 
 
-import com.yudahendriawan.ProjectTugasAkhir.Node;
-import com.yudahendriawan.ProjectTugasAkhir.Places;
+import com.yudahendriawan.ProjectTugasAkhir.model.Node;
+import com.yudahendriawan.ProjectTugasAkhir.model.Places;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

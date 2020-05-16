@@ -3,6 +3,7 @@ package com.yudahendriawan.ProjectTugasAkhir.api;
 
 import com.yudahendriawan.ProjectTugasAkhir.model.Node;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
+import com.yudahendriawan.ProjectTugasAkhir.model.Wisata;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface ApiInterface {
 
     @GET("places.php")
     Call<List<Places>> getPlaces();
+
+    @GET("wisataTA.php")
+    Call<List<Wisata>> getWisata();
+
 }

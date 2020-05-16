@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -41,6 +43,7 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.yudahendriawan.ProjectTugasAkhir.model.Criteria;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
+import com.yudahendriawan.ProjectTugasAkhir.wisata.WisataActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
     String wst;
     String pdt;
 
+    FloatingActionButton listWisata;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
+
+        listWisata = findViewById(R.id.listWisata);
 
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -202,6 +209,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
                     Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        listWisata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WisataActivity.class);
+                startActivity(intent);
             }
         });
 

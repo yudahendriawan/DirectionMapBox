@@ -113,12 +113,13 @@
         mapbox:mapbox_cameraTargetLng="112.795"
         mapbox:mapbox_cameraZoom="10">
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:layout_width="80dp"-->
-        <!--            android:layout_height="80dp"-->
-        <!--            android:layout_margin="20dp"-->
-        <!--            mapbox:rippleColor="@color/colorAccent"-->
-        <!--            android:layout_gravity="bottom" />-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/listWisata"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            mapbox:rippleColor="@color/colorAccent"
+            android:layout_gravity="bottom" />
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

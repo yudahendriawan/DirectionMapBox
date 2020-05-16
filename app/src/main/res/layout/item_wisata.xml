@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="175dp">
+
+    <ImageView
+        android:id="@+id/image_wisata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        tools:src="@android:color/black"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/name_wisata"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignBottom="@+id/image_wisata"
+        tools:text="FWEJFJEWBFHEWBFEWBHFHEWHJ"
+        android:gravity="bottom"
+        android:textColor="#ffffff"
+        android:background="@color/cardview_shadow_start_color"
+        android:layout_marginLeft="10dp" />
+
+</RelativeLayout>

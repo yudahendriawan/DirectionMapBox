@@ -10,7 +10,7 @@ public interface WisataView {
 
     void onHideLoading();
 
-    void onGetResult(List<Places> wisataList);
+    void onGetResult(List<Wisata> wisataList);
 
     void onErrorLoading(String message);
 }

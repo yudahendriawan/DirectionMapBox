@@ -47,7 +47,7 @@ public class Node {
         this.roadDensity = roadDensity;
     }
 
-    Node() {
+    public Node() {
     }
 
     public ArrayList<Node> getNode() {

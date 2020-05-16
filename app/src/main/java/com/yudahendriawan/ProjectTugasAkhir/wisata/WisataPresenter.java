@@ -1,8 +1,11 @@
 package com.yudahendriawan.ProjectTugasAkhir.wisata;
 
+import androidx.annotation.NonNull;
+
 import com.yudahendriawan.ProjectTugasAkhir.api.ApiClient;
 import com.yudahendriawan.ProjectTugasAkhir.api.ApiInterface;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
+import com.yudahendriawan.ProjectTugasAkhir.model.Wisata;
 
 import java.util.List;
 
@@ -22,11 +25,11 @@ public class WisataPresenter {
         view.onShowLoading();
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        Call<List<Places>> call = apiInterface.getPlaces();
+        Call<List<Wisata>> call = apiInterface.getWisata();
 
-        call.enqueue(new Callback<List<Places>>() {
+        call.enqueue(new Callback<List<Wisata>>() {
             @Override
-            public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
+            public void onResponse(@NonNull Call<List<Wisata>> call, @NonNull Response<List<Wisata>> response) {
                 view.onHideLoading();
 
                 if (response.isSuccessful() && response.body() != null) {
@@ -35,7 +38,7 @@ public class WisataPresenter {
             }
 
             @Override
-            public void onFailure(Call<List<Places>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Wisata>> call, @NonNull Throwable t) {
                 view.onHideLoading();
                 view.onErrorLoading(t.getLocalizedMessage());
             }

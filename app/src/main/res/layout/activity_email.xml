@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/design"
+    tools:context=".EmailActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:text="SELAMAT DATANG"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailWrapper"
+        android:layout_width="fill_parent"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_height="50dp"
+
+        app:hintTextColor="@color/colorPrimary"
+        app:counterOverflowTextColor="@color/colorPrimary"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        app:counterTextColor="@color/colorPrimary"
+        android:layout_marginTop="180dp"
+        android:hint="Email">
+
+        <EditText
+            android:id="@+id/email"
+            android:textColorHighlight="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        app:counterOverflowTextColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimary"
+        app:counterTextColor="@color/colorPrimary"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="Username">
+
+        <EditText
+            android:id="@+id/username"
+            android:textColorHighlight="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textColorHint="@color/colorPrimary"
+        app:counterOverflowTextColor="@color/colorPrimary"
+        app:counterTextColor="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimary"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="Password">
+
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:textColorHighlight="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginTop="40dp"
+        android:text="login"
+        android:textColor="@android:color/white"
+        android:background="@drawable/font_red"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

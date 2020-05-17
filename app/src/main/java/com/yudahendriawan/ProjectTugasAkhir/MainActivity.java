@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     String wst;
     String pdt;
 
-    FloatingActionButton listWisata;
+    //  FloatingActionButton listWisata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
+        showMapStandard();
 
-        listWisata = findViewById(R.id.listWisata);
+        // listWisata = findViewById(R.id.listWisata);
 
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -146,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         proses = findViewById(R.id.proses);
         show = findViewById(R.id.show);
         show_arrow = findViewById(R.id.show_arrow);
+
+        MenuActivity menuActivity = new MenuActivity();
+
 
 //        inputDest = findViewById(R.id.edt_dest);
 //        inputSource = findViewById(R.id.edt_source);
@@ -212,13 +216,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listWisata.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), WisataActivity.class);
-                startActivity(intent);
-            }
-        });
+//        listWisata.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), WisataActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -331,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        showMapStandard();
 
         // mapView.onResume();
     }
@@ -338,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //  mapView.onStart();
+        showMapStandard();
     }
 
     @Override
@@ -824,6 +829,84 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
 
+    }
+
+    void showMapStandard() {
+        mapView = findViewById(R.id.mapView);
+        mapView.onStart();
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.295, 112.802))
+                                .title("Taman Harmoni"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.290, 112.796))
+                                .title("Sakinah Supermarket"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.272280, 112.759526))
+                                .title("Museum dan Pusat Kajian Etnografi UNAIR"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.250636, 112.753804))
+                                .title("Museum WR. Soeptratman"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.311799, 112.782312))
+                                .title("Museum Teknoform Undika"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.265257, 112.758042))
+                                .title("Museum Pendidikan Kedokteran UNAIR Sby"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.247226, 112.802257))
+                                .title("Klenteng Sanggar Agung"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.254267, 112.801853))
+                                .title("Atlantis Land"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.249400, 112.800501))
+                                .title("Pantai Ria Kenjeran"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.294329, 112.761751))
+                                .title("Taman Flora"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.297431, 112.760045))
+                                .title("Pasar Bunga Bratang"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.312360, 112.788902))
+                                .title("Kebun Bibit Wonorejo"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.251590, 112.754599))
+                                .title("Taman Mundu"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.318214, 112.784242))
+                                .title("Taman Kunang-kunang"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.275934, 112.802721))
+                                .title("Food Festival Pakuwon City"));
+
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-7.276591, 112.805451))
+                                .title("East Cost Surabaya"));
+                    }
+                });
+            }
+        });
     }
 }
 

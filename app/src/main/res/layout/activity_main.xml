@@ -8,31 +8,7 @@
     android:orientation="vertical"
     tools:context="com.yudahendriawan.ProjectTugasAkhir.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
 
-        <Button
-            android:layout_margin="10dp"
-            android:id="@+id/proses"
-            android:layout_width="200dp"
-            android:textColor="@android:color/white"
-            android:layout_height="50dp"
-            android:background="@drawable/font_red"
-            android:text="Proses" />
-
-        <Button
-            android:layout_margin="10dp"
-            android:id="@+id/show"
-            android:textColor="@android:color/white"
-            android:background="@drawable/font_red"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Bobot" />
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -70,6 +46,7 @@
             <!--            android:layout_height="20dp"/>-->
         </LinearLayout>
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_gravity="center"
@@ -78,9 +55,8 @@
 
             <Button
                 android:id="@+id/show_arrow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -104,6 +80,32 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_margin="10dp"
+            android:id="@+id/proses"
+            android:layout_width="200dp"
+            android:textColor="@android:color/white"
+            android:layout_height="50dp"
+            android:background="@drawable/font_red"
+            android:text="Get DATA" />
+
+        <Button
+            android:layout_margin="10dp"
+            android:id="@+id/show"
+            android:textColor="@android:color/white"
+            android:background="@drawable/font_red"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Bobot" />
+
+
+    </LinearLayout>
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -113,13 +115,13 @@
         mapbox:mapbox_cameraTargetLng="112.795"
         mapbox:mapbox_cameraZoom="10">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/listWisata"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            mapbox:rippleColor="@color/colorAccent"
-            android:layout_gravity="bottom" />
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/listWisata"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="80dp"-->
+        <!--            android:layout_margin="20dp"-->
+        <!--            mapbox:rippleColor="@color/colorAccent"-->
+        <!--            android:layout_gravity="bottom" />-->
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </LinearLayout>

@@ -4,4 +4,5 @@ public class Key {
 
     public static final String INTENT_DATA = "INTENT_DATA";
     public static final String TITLE_WISATA = "Wisata";
+    public static final String MENU_TITLE = "Menu";
 }

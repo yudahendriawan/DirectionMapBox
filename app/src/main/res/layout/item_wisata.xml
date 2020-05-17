@@ -12,8 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         tools:src="@android:color/black"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/name_wisata"

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".wisata.WisataActivity"></activity>
+        <activity android:name=".wisata.DetailWisataActivity"></activity>
+        <activity android:name=".wisata.WisataActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

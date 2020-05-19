@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/design"
     tools:context=".EmailActivity"
+    android:padding="16dp"
     android:orientation="vertical">
 
     <TextView
@@ -17,70 +18,129 @@
         android:textColor="@android:color/white"
         android:layout_height="wrap_content" />
 
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/emailWrapper"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:textColorHint="@color/colorPrimary"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        app:errorEnabled="true"-->
+    <!--        app:hintTextColor="@color/colorPrimary"-->
+    <!--        app:counterOverflowTextColor="@color/colorPrimary"-->
+    <!--        android:layout_marginLeft="40dp"-->
+    <!--        android:layout_marginRight="40dp"-->
+    <!--        app:counterTextColor="@color/colorPrimary"-->
+    <!--        android:layout_marginTop="180dp"-->
+    <!--        android:hint="Email">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/email"-->
+    <!--            android:textColorHighlight="@color/colorPrimary"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:inputType="textEmailAddress"-->
+    <!--            android:background="@android:drawable/editbox_background_normal"-->
+    <!--            android:layout_height="match_parent" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/usernameWrapper"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        app:counterOverflowTextColor="@color/colorPrimary"-->
+    <!--        android:textColorHint="@color/colorPrimary"-->
+    <!--        app:hintTextColor="@color/colorPrimary"-->
+    <!--        app:counterTextColor="@color/colorPrimary"-->
+    <!--        android:layout_marginLeft="40dp"-->
+    <!--        android:layout_marginRight="40dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        app:counterEnabled="true"-->
+    <!--        app:counterMaxLenght="15"-->
+
+    <!--        app:errorEnabled="true"-->
+    <!--        android:hint="Username">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/username"-->
+    <!--            android:inputType="text"-->
+
+    <!--            android:textColorHighlight="@color/colorPrimary"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:background="@android:drawable/editbox_background_normal"-->
+    <!--            android:layout_height="match_parent" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/passwordWrapper"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:textColorHint="@color/colorPrimary"-->
+    <!--        app:counterOverflowTextColor="@color/colorPrimary"-->
+    <!--        app:counterTextColor="@color/colorPrimary"-->
+    <!--        app:hintTextColor="@color/colorPrimary"-->
+    <!--        android:layout_marginLeft="40dp"-->
+    <!--        android:layout_marginRight="40dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        app:errorEnabled="true"-->
+    <!--        app:passwordToggleEnabled="true"-->
+    <!--        android:hint="Password">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/password"-->
+
+    <!--            android:textColorHighlight="@color/colorPrimary"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:background="@android:drawable/editbox_background_normal"-->
+    <!--            android:layout_height="match_parent" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailWrapper"
-        android:layout_width="fill_parent"
-        android:textColorHint="@color/colorPrimary"
-        android:layout_height="50dp"
+        android:id="@+id/text_input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        app:errorEnabled="true">
 
-        app:hintTextColor="@color/colorPrimary"
-        app:counterOverflowTextColor="@color/colorPrimary"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        app:counterTextColor="@color/colorPrimary"
-        android:layout_marginTop="180dp"
-        android:hint="Email">
-
-        <EditText
-            android:id="@+id/email"
-            android:textColorHighlight="@color/colorPrimary"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:background="@android:drawable/editbox_background_normal"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameWrapper"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        app:counterOverflowTextColor="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary"
-        app:hintTextColor="@color/colorPrimary"
-        app:counterTextColor="@color/colorPrimary"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:id="@+id/text_input_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
         android:layout_marginTop="10dp"
-        android:hint="Username">
+        app:counterMaxLength="15"
+        app:errorEnabled="true">
 
-        <EditText
-            android:id="@+id/username"
-            android:textColorHighlight="@color/colorPrimary"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:background="@android:drawable/editbox_background_normal"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="text" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordWrapper"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:textColorHint="@color/colorPrimary"
-        app:counterOverflowTextColor="@color/colorPrimary"
-        app:counterTextColor="@color/colorPrimary"
-        app:hintTextColor="@color/colorPrimary"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:id="@+id/text_input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Password">
+        app:passwordToggleEnabled="true"
+        app:errorEnabled="true">
 
-        <EditText
-            android:id="@+id/password"
-            android:inputType="textPassword"
-            android:textColorHighlight="@color/colorPrimary"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:background="@android:drawable/editbox_background_normal"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -88,8 +148,10 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="40dp"
         android:layout_marginTop="40dp"
-        android:text="login"
+        android:text="Confirm"
+        android:onClick="confirmInput"
         android:textColor="@android:color/white"
         android:background="@drawable/font_red"
         android:layout_gravity="center_horizontal" />

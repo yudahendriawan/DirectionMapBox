@@ -61,5 +61,11 @@
         <item>Wisata</item>
         <item>Kepadatan Jalan</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">hello</string>
+    <string name="pref_file">com.yudahendriawan.preference_file</string>
+    <string name="pref_login_status">com.yudahendriawan.preference_login_status</string>
+    <string name="pref_user_name">com.yudahendriawan.preference_user_name</string>
 </resources>
 

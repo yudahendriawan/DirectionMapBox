@@ -14,7 +14,7 @@ import com.yudahendriawan.ProjectTugasAkhir.util.Key;
 
 public class DetailWisataActivity extends AppCompatActivity {
     ImageView imageWisata;
-    TextView wisataAddress, wisataName, wisataSummary, wisataOpenTime, wisataContact;
+    TextView wisataAddress, wisataName, wisataSummary, wisataOpenTime;
     Wisata wisata;
 
     @Override
@@ -26,7 +26,7 @@ public class DetailWisataActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         wisataAddress = findViewById(R.id.wisata_address);
-        wisataContact = findViewById(R.id.wisata_contact);
+
         wisataName = findViewById(R.id.detail_wisata_name);
         wisataOpenTime = findViewById(R.id.wisata_openTime);
         wisataSummary = findViewById(R.id.wisata_summary);
@@ -40,7 +40,7 @@ public class DetailWisataActivity extends AppCompatActivity {
         wisataAddress.setText(wisata.getAddress());
         wisataSummary.setText(wisata.getSummary());
         wisataOpenTime.setText(wisata.getOpenTime());
-        wisataContact.setText(wisata.getContactPerson());
+
 
         getSupportActionBar().hide();
 

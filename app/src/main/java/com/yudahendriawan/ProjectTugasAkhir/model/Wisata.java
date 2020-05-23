@@ -28,10 +28,6 @@ public class Wisata implements Parcelable {
     private String fee;
 
     @Expose
-    @SerializedName("contactPerson")
-    private String contactPerson;
-
-    @Expose
     @SerializedName("imgUrl")
     private String imgUrl;
 
@@ -45,7 +41,6 @@ public class Wisata implements Parcelable {
         address = in.readString();
         openTime = in.readString();
         fee = in.readString();
-        contactPerson = in.readString();
         imgUrl = in.readString();
         summary = in.readString();
     }
@@ -102,14 +97,6 @@ public class Wisata implements Parcelable {
         this.fee = fee;
     }
 
-    public String getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(String contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -138,7 +125,6 @@ public class Wisata implements Parcelable {
         dest.writeString(address);
         dest.writeString(openTime);
         dest.writeString(fee);
-        dest.writeString(contactPerson);
         dest.writeString(imgUrl);
         dest.writeString(summary);
     }

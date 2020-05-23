@@ -32,8 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         // int vertices = 31;
         //  graph = new Graph(vertices, this);
-
-
+        
         findRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

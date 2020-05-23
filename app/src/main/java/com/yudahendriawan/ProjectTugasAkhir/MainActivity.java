@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -72,7 +73,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
  * Use Mapbox Java Services to request directions from the Mapbox Directions API and show the
  * route with a LineLayer.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFromDatabase {
 
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private Point origin;
     private Point destination;
 
-    ProgressDialog progressDialog;
+    //ProgressDialog progressDialog;
     Spinner spinner1, spinner2, spinner3;
 
     private List<Point> pointList;
@@ -104,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
     int getSource;
     int getDest;
 
-    Graph graph; /*= new Graph(vertices);*/
+    ProgressBar progressBar;
+
+    Graph graph;
     Graph g = new Graph();
     DepthFirstSearch dfs; /*= new DepthFirstSearch();*/
     boolean repeat = false;
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
     int bobotJarak;
     int bobotWisata;
     int bobotKepadatan;
+
 
     String jrk;
     String wst;
@@ -136,23 +140,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         showMapStandard();
 
-        // listWisata = findViewById(R.id.listWisata);
-
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         proses = findViewById(R.id.proses);
         show = findViewById(R.id.show);
         show_arrow = findViewById(R.id.show_arrow);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         MenuActivity menuActivity = new MenuActivity();
-
-
-//        inputDest = findViewById(R.id.edt_dest);
-//        inputSource = findViewById(R.id.edt_source);
 
         AutoCompleteTextView acSource = findViewById(R.id.autocomplete_source);
         AutoCompleteTextView acDest = findViewById(R.id.autocomplete_dest);
@@ -166,26 +163,12 @@ public class MainActivity extends AppCompatActivity {
         dfs = new DepthFirstSearch();
         Places place = new Places();
 
-        show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogForm();
-            }
-        });
+        show.setOnClickListener(v -> dialogForm());
 
 
-        proses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                graph.addEdgeDB();
-                //  graph.getPlacesData();
-                Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
-//                String[] acWisata = new String[place.getType().length()];
-//                for(int i = 0; i<place.getType().length();i++){
-//                    acWisata[i] = place.getType();
-//                }
-
-            }
+        proses.setOnClickListener(v -> {
+            graph.addEdgeDB();
+            Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -193,9 +176,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
-//                    int getSource = Integer.parseInt(acSource.getText().toString());
-//                    int getDest = Integer.parseInt(ac.getText().toString());
-
                     for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
                         if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
                             getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
@@ -215,14 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        listWisata.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), WisataActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 
@@ -540,11 +512,6 @@ public class MainActivity extends AppCompatActivity {
             // }
 
 
-            // Set the origin location to the Alhambra landmark in Granada, Spain.
-            // origin = Point.fromLngLat(112.803655, -7.294455);
-
-            // Set the destination location to the Plaza del Triunfo in Granada, Spain.
-            //  destination = Point.fromLngLat(112.805451, -7.276591);
 
             //klennteng sangar agung, pantai ria kenjeran
             routeURL = "-7.247226, 112.802257/-7.249400, 112.800501";
@@ -662,53 +629,7 @@ public class MainActivity extends AppCompatActivity {
         inputBobotJarak.setText("");
     }
 
-//    public void dialogForm() {
-//        bobotJarak = 0;
-//        bobotKepadatan = 0;
-//        bobotWisata = 0;
-//
-//        dialog = new AlertDialog.Builder(MainActivity.this);
-//        inflater = getLayoutInflater();
-//        View dialogView = inflater.inflate(R.layout.form_bobot, null);
-//        dialog.setView(dialogView);
-//        dialog.setCancelable(true);
-//        // dialog.setIcon(R.mipmap.ic_launcher);
-//        // dialog.setTitle("Input Bobot");
-//
-//        inputBobotJarak = dialogView.findViewById(R.id.bobotJarak);
-//        inputBobotWisata = dialogView.findViewById(R.id.bobotWisata);
-//        inputBobotKepadatan = dialogView.findViewById(R.id.bobotKepadatan);
-//
-//        kosong();
-//
-//        dialog.setPositiveButton("Submit", (dialog, which) -> {
-////            jrk = inputBobotJarak.getText().toString();
-////            wst = inputBobotWisata.getText().toString();
-////            pdt = inputBobotWisata.getText().toString();
-//
-//            bobotJarak = Integer.parseInt(inputBobotJarak.getText().toString());
-//            bobotWisata = Integer.parseInt(inputBobotWisata.getText().toString());
-//            bobotKepadatan = Integer.parseInt(inputBobotKepadatan.getText().toString());
-//
-//            Log.d("bobot", bobotJarak + "," + bobotWisata + "," + bobotKepadatan);
-//
-//            dialog.dismiss();
-//        });
-//
-//        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        dialog.show();
-//
-//    }
-
     public void dialogForm() {
-        //  Spinner
-
         bobotJarak = 0;
         bobotKepadatan = 0;
         bobotWisata = 0;
@@ -718,9 +639,6 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.form_bobot, null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
-        // dialog.setIcon(R.mipmap.ic_launcher);
-        // dialog.setTitle("Input Bobot");
-
 
         spinner1 = dialogView.findViewById(R.id.spinnerPriority1);
         spinner2 = dialogView.findViewById(R.id.spinnerPriority2);
@@ -907,6 +825,17 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void showProgressBar() {
+        //     graph.addEdgeDB();
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
 

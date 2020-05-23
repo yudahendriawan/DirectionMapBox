@@ -34,6 +34,9 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         prefConfig = new PrefConfig(this);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -120,7 +123,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Are you sure to Logout?")
+                .setMessage("Hey " + prefConfig.readName() + ", Are you sure to Logout?")
                 .setCancelable(false)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -148,22 +151,22 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         alertDialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (doubleBackToExitPressedOnce) {
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce = false;
+//            }
+//        }, 2000);
+//    }
 }

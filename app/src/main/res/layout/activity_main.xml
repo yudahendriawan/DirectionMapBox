@@ -106,6 +106,17 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:layout_marginTop="10dp"
+        android:id="@+id/progressBar"
+        style="@style/ProgressBarPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="80" />
+
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"

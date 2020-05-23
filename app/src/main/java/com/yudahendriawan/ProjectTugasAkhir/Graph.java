@@ -45,6 +45,13 @@ class Graph {
     String[] latLong;
     String[] listWisata;
     private String[] wisataSourceDest;
+    OnGetDataFromDatabase getDataFromDatabase;
+
+    public interface OnGetDataFromDatabase {
+        void showProgressBar();
+
+        void hideProgressBar();
+    }
 
 
     public Graph(int vertices, Context context) {
@@ -64,7 +71,6 @@ class Graph {
     }
 
     public void addEdge() {
-        //add edge
 
         double[][] data = new double[][]{
                 {0, 1, 476.62, 1},
@@ -166,32 +172,24 @@ class Graph {
 
     public void addEdgeDB() {
 
-//       view.showLoading();
-
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<List<Node>> call = apiInterface.getNode();
-        //boolean past = false;
+
         getPlacesData();
-        //Node node = new Node();
+
         Log.d("test", "test");
         call.enqueue(new Callback<List<Node>>() {
             @Override
             public void onResponse(@NotNull Call<List<Node>> call, @NotNull Response<List<Node>> response) {
-                //    nodes = response.body();
-                // Log.d("print",response.body().toString());
-                //    view.hideLoading();
-                Log.d("test2", "berhasil");
 
-//                List<Node> nodes = new ArrayList<>();
-//                nodes = response.body();
+                Log.d("test2", "berhasil");
 
 
                 if (response.isSuccessful() && response.body() != null) {
                     double[][] data = new double[response.body().size()][4];
                     Log.d("responseSize", String.valueOf(response.body().size()));
-                    //nodes = response.body();
+
                     for (int i = 0; i < response.body().size(); i++) {
-                        //  getAdjacencyList()[nodes.get(i).getSource()].add(nodes.get(i));
                         data[i][0] = response.body().get(i).getSource();
                         data[i][1] = response.body().get(i).getDestination();
                         data[i][2] = response.body().get(i).getDistance();
@@ -203,10 +201,6 @@ class Graph {
                     past = true;
                     Log.d("datasize", "data tidak null");
 
-
-//                    setAdjacencyList(getAdjacencyList());
-//                    Log.d("adjacencyGraph", getAdjacencyList().toString());
-                    //    Log.d("nodeDATA", nodeData.toString());
 
                     String dataPrint = "[";
                     for (int i = 0; i < data.length; i++) {
@@ -221,8 +215,6 @@ class Graph {
                         dataPrint = dataPrint + "]";
                     }
                     Log.d("dataPrint", dataPrint);
-                    //Log.d("responseBody", response.body().toString());
-
 
                 }
 
@@ -232,8 +224,6 @@ class Graph {
 
             @Override
             public void onFailure(@NotNull Call<List<Node>> call, @NotNull Throwable t) {
-                //   view.hideLoading();
-                //  view.onErrorLoading(t.getLocalizedMessage());
                 Log.d("test2", "gagal");
                 Log.d("onFailure", t.getLocalizedMessage());
             }

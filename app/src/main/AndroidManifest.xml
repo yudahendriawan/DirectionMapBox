@@ -14,14 +14,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".EmailActivity">
+
+        </activity>
+        <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MenuActivity">
-
         </activity>
         <activity android:name=".wisata.DetailWisataActivity" />
         <activity android:name=".wisata.WisataActivity" />

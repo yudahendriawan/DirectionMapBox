@@ -1,10 +1,13 @@
 package com.yudahendriawan.ProjectTugasAkhir;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
     public static PrefConfig prefConfig;
     public static ApiInterface apiInterface;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,15 +106,64 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
                 .beginTransaction()
                 .replace(R.id.fragment_container, new MenuFragment())
                 .commit();
+        Toast.makeText(this, "Welcome " + name, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void logoutPerform() {
-        prefConfig.writeLoginStatus(false);
-        prefConfig.writeName("User");
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new LoginFragment())
-                .commit();
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Are you sure to Logout?")
+                .setCancelable(false)
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        prefConfig.writeLoginStatus(false);
+                        prefConfig.writeName("User");
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, new LoginFragment())
+                                .commit();
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

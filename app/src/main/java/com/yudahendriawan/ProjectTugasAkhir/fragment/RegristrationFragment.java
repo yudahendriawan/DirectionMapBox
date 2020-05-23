@@ -65,9 +65,9 @@ public class RegristrationFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.body().getResponse().equals("ok")) {
-                    MenuActivity.prefConfig.displayToast("Regristation Success");
+                    MenuActivity.prefConfig.displayToast("Registration Success");
                 } else if (response.body().getResponse().equals("exist")) {
-                    MenuActivity.prefConfig.displayToast("User Alreday Exist");
+                    MenuActivity.prefConfig.displayToast("User Already Exist");
                 } else if (response.body().getResponse().equals("error")) {
                     MenuActivity.prefConfig.displayToast("Something went wrong");
                 }

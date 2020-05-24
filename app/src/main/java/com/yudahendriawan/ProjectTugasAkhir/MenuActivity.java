@@ -3,11 +3,13 @@ package com.yudahendriawan.ProjectTugasAkhir;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -52,45 +54,6 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
             }
         }
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//
-//        getSupportActionBar().setTitle(Key.MENU_TITLE);
-//
-//
-//        findRoute = findViewById(R.id.findRoute);
-//        wisata = findViewById(R.id.listWisata);
-//        login = findViewById(R.id.login);
-//        // int vertices = 31;
-//        //  graph = new Graph(vertices, this);
-//
-//        findRoute.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // graph.addEdgeDB();
-//                // Toast.makeText(v.getContext(), "Get Data Form Database", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        wisata.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), WisataActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), EmailActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
     @Override
@@ -129,6 +92,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
                     public void onClick(DialogInterface dialog, int id) {
                         prefConfig.writeLoginStatus(false);
                         prefConfig.writeName("User");
+
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.fragment_container, new LoginFragment())
@@ -151,22 +115,4 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         alertDialog.show();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed();
-//            return;
-//        }
-//
-//        this.doubleBackToExitPressedOnce = true;
-//        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-//
-//        new Handler().postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                doubleBackToExitPressedOnce = false;
-//            }
-//        }, 2000);
-//    }
 }

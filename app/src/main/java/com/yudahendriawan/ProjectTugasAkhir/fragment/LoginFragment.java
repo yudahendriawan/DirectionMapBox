@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.yudahendriawan.ProjectTugasAkhir.MainActivity;
 import com.yudahendriawan.ProjectTugasAkhir.MenuActivity;
 import com.yudahendriawan.ProjectTugasAkhir.R;
@@ -30,8 +32,9 @@ public class LoginFragment extends Fragment {
 
     private TextView RegText;
     OnLoginFormActivityListener loginFormActivityListener;
+    private ProgressBar progress_loader;
 
-    private EditText user_name, user_password;
+    private TextInputLayout user_name, user_password;
     private Button btn_login;
 
     public interface OnLoginFormActivityListener {
@@ -55,6 +58,8 @@ public class LoginFragment extends Fragment {
         user_name = view.findViewById(R.id.user_name);
         user_password = view.findViewById(R.id.user_password);
         btn_login = view.findViewById(R.id.btn_login);
+        progress_loader = view.findViewById(R.id.progress_loader);
+        progress_loader.setVisibility(View.INVISIBLE);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +85,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void performLogin() {
-        String username = user_name.getText().toString();
-        String userpassword = user_password.getText().toString();
+        String username = user_name.getEditText().getText().toString();
+        String userpassword = user_password.getEditText().getText().toString();
+
+        progress_loader.setVisibility(View.VISIBLE);
+        btn_login.setVisibility(View.GONE);
 
         Call<User> call = MenuActivity.apiInterface.performUserLogin(username, userpassword);
         call.enqueue(new Callback<User>() {
@@ -90,9 +98,10 @@ public class LoginFragment extends Fragment {
                 if (response.body().getResponse().equals("ok")) {
                     MenuActivity.prefConfig.writeLoginStatus(true);
                     loginFormActivityListener.performLogin(response.body().getName());
-
                 } else if (response.body().getResponse().equals("failed")) {
                     MenuActivity.prefConfig.displayToast("Login Failed, Please try again");
+                    progress_loader.setVisibility(View.INVISIBLE);
+                    btn_login.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -102,8 +111,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        user_name.setText("");
-        user_password.setText("");
+        user_name.getEditText().setText("");
+        user_password.getEditText().setText("");
     }
 
 }

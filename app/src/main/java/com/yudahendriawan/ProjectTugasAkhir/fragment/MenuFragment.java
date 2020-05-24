@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,20 @@ public class MenuFragment extends Fragment {
         Activity activity = (Activity) context;
         logoutListener = (OnLogoutListener) activity;
 
+    }
+
+    //disable back presedd
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.getView().setFocusableInTouchMode(true);
+        this.getView().requestFocus();
+        this.getView().setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                return true;
+            }
+            return false;
+        });
     }
 
 }

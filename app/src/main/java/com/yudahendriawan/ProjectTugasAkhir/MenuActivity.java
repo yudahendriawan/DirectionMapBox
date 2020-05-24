@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -36,7 +38,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         prefConfig = new PrefConfig(this);
@@ -101,6 +103,127 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(new MenuFragment().getId());
+        if (fragment instanceof MenuFragment) {
+            getMenuInflater().inflate(R.menu.menu, menu);
+            return super.onCreateOptionsMenu(menu);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(new MenuFragment().getId());
+        if (fragment instanceof MenuFragment) {
+            setMode(item.getItemId());
+            return super.onOptionsItemSelected(item);
+        } else
+            return false;
+    }
+
+    public void setMode(int selectedMode) {
+
+        switch (selectedMode) {
+            case R.id.about:
+                about();
+                break;
+            case R.id.exit:
+                exit();
+                break;
+//            case R.id.version:
+//                version();
+//                break;
+            case R.id.profil:
+                profil();
+                break;
+        }
+    }
+
+    public void about() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(getString(R.string.about_me))
+                .setTitle("About")
+                .setCancelable(false).setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
+//                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // if this button is clicked, close
+//                        // current activity
+//                        MainActivity.this.finish();
+//                    }
+//                })
+//                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // if this button is clicked, just close
+//                        // the dialog box and do nothing
+//                        dialog.cancel();
+    }
+
+    public void profil() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(prefConfig.readName() + "")
+                .setTitle("About")
+                .setCancelable(false).setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
+//
+    }
+
+    public void exit() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Hey, " + prefConfig.readName() + " Are you sure to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        MenuActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing

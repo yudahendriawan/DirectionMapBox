@@ -67,5 +67,9 @@
     <string name="pref_file">com.yudahendriawan.preference_file</string>
     <string name="pref_login_status">com.yudahendriawan.preference_login_status</string>
     <string name="pref_user_name">com.yudahendriawan.preference_user_name</string>
+    <string name="about">About</string>
+    <string name="versi">Version</string>
+    <string name="exit">Exit</string>
+    <string name="about_me">Yuda Hendriawna Budi Hadnoko</string>
 </resources>
 

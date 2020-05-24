@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         RegText = view.findViewById(R.id.register_txt);
         user_name = view.findViewById(R.id.user_name);
         user_password = view.findViewById(R.id.user_password);

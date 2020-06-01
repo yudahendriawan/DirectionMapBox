@@ -69,7 +69,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
  * Use Mapbox Java Services to request directions from the Mapbox Directions API and setPriority the
  * route with a LineLayer.
  */
-public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFromDatabase {
+public class MainActivity extends AppCompatActivity {
 
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
     String routePointList = "";
     String origin_ = "";
     String destination_ = "";
-    public static Button getDataFromDB;
-    Button setPriority;
+    //public static Button getDataFromDB;
+    public static Button setPriority;
     EditText inputSource, inputDest;
-    Button getRoutes;
+    public static Button getRoutes;
 
     int vertices = 31;
     int getSource = 1000;
@@ -112,6 +112,12 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     EditText inputBobotJarak, inputBobotWisata, inputBobotKepadatan;
+
+    int spinnerSelected1 = 0;
+    int spinnerSelected2 = 0;
+    int spinnerSelected3 = 0;
+
+
 
     int bobotJarak;
     int bobotWisata;
@@ -136,11 +142,10 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //binding
-        getDataFromDB = findViewById(R.id.proses);
+        // getDataFromDB = findViewById(R.id.proses);
         setPriority = findViewById(R.id.show);
         getRoutes = findViewById(R.id.show_arrow);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+
 
         getRoutes.setVisibility(View.INVISIBLE);
         setPriority.setVisibility(View.INVISIBLE);
@@ -157,12 +162,15 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
 
         setPriority.setOnClickListener(v -> dialogForm());
 
-        getDataFromDB.setOnClickListener(v -> {
-            graph.addEdgeDB();
-            Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
-            setPriority.setVisibility(View.VISIBLE);
-            getRoutes.setVisibility(View.VISIBLE);
-        });
+        graph.addEdgeDB();
+        Toast.makeText(this, "Get Data from DB", Toast.LENGTH_SHORT).show();
+
+//        getDataFromDB.setOnClickListener(v -> {
+//            graph.addEdgeDB();
+//            Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
+//            setPriority.setVisibility(View.VISIBLE);
+//            getRoutes.setVisibility(View.VISIBLE);
+//        });
 
 
         getRoutes.setOnClickListener(v -> {
@@ -647,6 +655,10 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(adapter3);
 
+        spinner1.setSelection(spinnerSelected1);
+        spinner2.setSelection(spinnerSelected2);
+        spinner3.setSelection(spinnerSelected3);
+
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -654,10 +666,13 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
                     bobotJarak = 50;
+                    spinnerSelected1 = 1;
                 } else if (item == 2) {
                     bobotWisata = 50;
+                    spinnerSelected1 = 2;
                 } else if (item == 3) {
                     bobotKepadatan = 50;
+                    spinnerSelected1 = 3;
                 }
             }
 
@@ -673,10 +688,13 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
                     bobotJarak = 10;
+                    spinnerSelected2 = 1;
                 } else if (item == 2) {
                     bobotWisata = 10;
+                    spinnerSelected2 = 2;
                 } else if (item == 3) {
                     bobotKepadatan = 10;
+                    spinnerSelected2 = 3;
                 }
             }
 
@@ -692,10 +710,13 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
                     bobotJarak = 1;
+                    spinnerSelected3 = 1;
                 } else if (item == 2) {
                     bobotWisata = 1;
+                    spinnerSelected3 = 2;
                 } else if (item == 3) {
                     bobotKepadatan = 1;
+                    spinnerSelected3 = 3;
                 }
             }
 
@@ -743,90 +764,75 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
     void showMapStandard() {
         mapView = findViewById(R.id.mapView);
         mapView.onStart();
-        mapView.getMapAsync(new OnMapReadyCallback() {
+        mapView.getMapAsync(mapboxMap -> mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
-            public void onMapReady(@NonNull final MapboxMap mapboxMap) {
-                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                    @Override
-                    public void onStyleLoaded(@NonNull Style style) {
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.295, 112.802))
-                                .title("Taman Harmoni"));
+            public void onStyleLoaded(@NonNull Style style) {
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.295, 112.802))
+                        .title("Taman Harmoni"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.290, 112.796))
-                                .title("Sakinah Supermarket"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.290, 112.796))
+                        .title("Sakinah Supermarket"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.272280, 112.759526))
-                                .title("Museum dan Pusat Kajian Etnografi UNAIR"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.272280, 112.759526))
+                        .title("Museum dan Pusat Kajian Etnografi UNAIR"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.250636, 112.753804))
-                                .title("Museum WR. Soeptratman"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.250636, 112.753804))
+                        .title("Museum WR. Soeptratman"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.311799, 112.782312))
-                                .title("Museum Teknoform Undika"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.311799, 112.782312))
+                        .title("Museum Teknoform Undika"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.265257, 112.758042))
-                                .title("Museum Pendidikan Kedokteran UNAIR Sby"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.265257, 112.758042))
+                        .title("Museum Pendidikan Kedokteran UNAIR Sby"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.247226, 112.802257))
-                                .title("Klenteng Sanggar Agung"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.247226, 112.802257))
+                        .title("Klenteng Sanggar Agung"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.254267, 112.801853))
-                                .title("Atlantis Land"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.254267, 112.801853))
+                        .title("Atlantis Land"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.249400, 112.800501))
-                                .title("Pantai Ria Kenjeran"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.249400, 112.800501))
+                        .title("Pantai Ria Kenjeran"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.294329, 112.761751))
-                                .title("Taman Flora"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.294329, 112.761751))
+                        .title("Taman Flora"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.297431, 112.760045))
-                                .title("Pasar Bunga Bratang"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.297431, 112.760045))
+                        .title("Pasar Bunga Bratang"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.312360, 112.788902))
-                                .title("Kebun Bibit Wonorejo"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.312360, 112.788902))
+                        .title("Kebun Bibit Wonorejo"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.251590, 112.754599))
-                                .title("Taman Mundu"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.251590, 112.754599))
+                        .title("Taman Mundu"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.318214, 112.784242))
-                                .title("Taman Kunang-kunang"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.318214, 112.784242))
+                        .title("Taman Kunang-kunang"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.275934, 112.802721))
-                                .title("Food Festival Pakuwon City"));
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.275934, 112.802721))
+                        .title("Food Festival Pakuwon City"));
 
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-7.276591, 112.805451))
-                                .title("East Cost Surabaya"));
-                    }
-                });
+                mapboxMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(-7.276591, 112.805451))
+                        .title("East Cost Surabaya"));
             }
-        });
+        }));
     }
 
-    @Override
-    public void showProgressBar() {
-        //     graph.addEdgeDB();
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
-    }
 }
 

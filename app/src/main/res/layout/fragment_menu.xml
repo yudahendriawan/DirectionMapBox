@@ -162,7 +162,7 @@
                 android:layout_gravity="center|top"
                 android:layout_marginTop="15dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/wisata" />
+                android:src="@drawable/logout" />
 
             <TextView
                 android:layout_width="wrap_content"

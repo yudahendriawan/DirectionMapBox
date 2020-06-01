@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EmailActivity">
-
-        </activity>
+        <activity android:name=".resultmap.ResultMapActivity"></activity>
+        <activity android:name=".EmailActivity"></activity>
         <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

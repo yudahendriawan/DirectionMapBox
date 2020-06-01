@@ -46,13 +46,6 @@ class Graph {
     String[] latLong;
     String[] listWisata;
     private String[] wisataSourceDest;
-    OnGetDataFromDatabase getDataFromDatabase;
-
-    public interface OnGetDataFromDatabase {
-        void showProgressBar();
-
-        void hideProgressBar();
-    }
 
 
     public Graph(int vertices, Context context) {
@@ -312,7 +305,9 @@ class Graph {
             if (isSuccess) {
                 Toast.makeText(context, "Get Data Succes", Toast.LENGTH_SHORT).show();
                 //MainActivity.cobaProgressBar.setVisibility(View.GONE);
-                MainActivity.getDataFromDB.setVisibility(View.GONE);
+                // MainActivity.getDataFromDB.setVisibility(View.GONE);
+                MainActivity.setPriority.setVisibility(View.VISIBLE);
+                MainActivity.getRoutes.setVisibility(View.VISIBLE);
                 isSuccess = false;
             }
 

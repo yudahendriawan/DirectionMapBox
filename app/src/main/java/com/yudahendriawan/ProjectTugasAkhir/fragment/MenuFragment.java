@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +30,8 @@ import com.yudahendriawan.ProjectTugasAkhir.MenuActivity;
 import com.yudahendriawan.ProjectTugasAkhir.R;
 import com.yudahendriawan.ProjectTugasAkhir.wisata.WisataActivity;
 
+import java.util.Date;
+
 import static com.yudahendriawan.ProjectTugasAkhir.MenuActivity.prefConfig;
 
 /**
@@ -37,6 +40,7 @@ import static com.yudahendriawan.ProjectTugasAkhir.MenuActivity.prefConfig;
 public class MenuFragment extends Fragment {
 
     CardView findRoute, wisata, logout;
+    TextView textViewWelcome, currentTime;
 
     OnLogoutListener logoutListener;
 
@@ -62,13 +66,35 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        // ((AppCompatActivity) getActivity()).setTitle("");
+
+
+
 
         findRoute = view.findViewById(R.id.findRoute);
         wisata = view.findViewById(R.id.listWisata);
         logout = view.findViewById(R.id.logout);
+        textViewWelcome = view.findViewById(R.id.welcome_text);
+        currentTime = view.findViewById(R.id.current_time);
+
+
         // login = findViewById(R.id.login);
         // int vertices = 31;
         //  graph = new Graph(vertices, this);
+        textViewWelcome.setText("Hallo, " + prefConfig.readName());
+
+        CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                currentTime.setText(currentDateTimeString);
+            }
+
+            public void onFinish() {
+
+            }
+        };
+        newtimer.start();
 
         findRoute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,5 +270,6 @@ public class MenuFragment extends Fragment {
         // show it
         alertDialog.show();
     }
+
 
 }

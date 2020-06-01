@@ -25,6 +25,9 @@ import com.yudahendriawan.ProjectTugasAkhir.fragment.RegristrationFragment;
 import com.yudahendriawan.ProjectTugasAkhir.util.Key;
 import com.yudahendriawan.ProjectTugasAkhir.wisata.WisataActivity;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MenuActivity extends AppCompatActivity implements LoginFragment.OnLoginFormActivityListener, MenuFragment.OnLogoutListener {
 //    CardView findRoute, wisata, login;
 //    Graph graph;
@@ -40,6 +43,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
         //getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().setTitle("");
 
         prefConfig = new PrefConfig(this);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
@@ -88,7 +92,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Hey " + prefConfig.readName() + ", Are you sure to Logout?")
+                .setMessage("Hey " + prefConfig.readName() + ",\n Are you sure to Logout?")
                 .setCancelable(false)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -236,6 +240,28 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
         // show it
         alertDialog.show();
+    }
+
+    public void version() {
+        Date currentTime = Calendar.getInstance().getTime();
+        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Version Apps : " + currentDateTimeString)
+                .setTitle("About")
+                .setCancelable(false).setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
+
     }
 
 }

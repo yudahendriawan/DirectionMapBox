@@ -10,14 +10,21 @@
     tools:context="fragment.RegristrationFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="242dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/based_logo" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="120dp"
-        android:text="Registration Form"
-
-        android:textColor="@android:color/white"
+        android:text="Sign Up"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="80dp"
+        android:textColor="#404040"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -27,7 +34,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="10dp"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText

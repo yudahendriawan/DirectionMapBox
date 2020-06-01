@@ -290,6 +290,7 @@ class Graph {
 
         Log.d("getData", "Method getData()");
 
+
         ArrayList<Node> nodeData = new ArrayList<>();
         for (double[] dataKu : data) {
             Node node = new Node();

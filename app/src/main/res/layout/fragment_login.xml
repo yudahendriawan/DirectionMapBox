@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/design"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@drawable/design"
     tools:context="fragment.LoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageView
+        android:layout_width="242dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/based_logo" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:text="Login Form"
-        android:textColor="@android:color/white"
+        android:text="Login"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="80dp"
+        android:textColor="#404040"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -36,7 +46,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="30dp"
         app:counterEnabled="true"
         app:counterMaxLength="15"
         app:errorEnabled="true">
@@ -65,7 +75,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:errorEnabled="true"
         app:passwordToggleEnabled="true">
 
@@ -82,13 +92,13 @@
         android:id="@+id/btn_login"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:foreground="?android:attr/selectableItemBackground"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:visibility="visible"
         android:background="@drawable/font_red"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Login"
+        android:textColor="@android:color/white"
+        android:visibility="visible"
 
         />
 
@@ -96,10 +106,10 @@
         android:id="@+id/progress_loader"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:indeterminateTint="@color/colorPrimary"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:indeterminateTint="@color/colorPrimary"
         android:visibility="visible"
         tools:targetApi="lollipop" />
 

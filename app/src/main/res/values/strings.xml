@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ProjectTugasAkhir</string>
     <string name="access_token">pk.eyJ1IjoieXVkYWhlbmRyaWF3YW4iLCJhIjoiY2s4b2ptOHByMWEyNzNsbXdjanltN2xlaCJ9.0r0zAhruVi38HkTTtYIs1A</string>
-    <string name="directions_activity_toast_message">Yeah</string>
+    <string name="directions_activity_toast_message">Successfully creating route</string>
     <string name="tools_description">djjebhjbcwebjhcbwhjebcwebfbcjwebjhcbwhjbcjwbjwbjcbwejcbwhecc wuhwebhbewhcbwh uwehchuewbhwbcu wchewbcuwbubcducb bcwubcuhbewucw</string>
     <string name="contact_string">085235244417</string>
 

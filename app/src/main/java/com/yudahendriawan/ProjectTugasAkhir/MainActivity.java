@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -95,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
     //public static Button getDataFromDB;
     public static Button setPriority;
     EditText inputSource, inputDest;
-    public static Button getRoutes;
+    public static FloatingActionButton getRoutes;
+    FloatingActionButton switchBtn;
+    Button clearBtn;
 
     int vertices = 31;
     int getSource = 1000;
@@ -123,7 +126,12 @@ public class MainActivity extends AppCompatActivity {
     int bobotWisata;
     int bobotKepadatan;
 
+    AutoCompleteTextView acSource;
+    AutoCompleteTextView acDest;
+
     public static ProgressBar cobaProgressBar;
+
+    Bundle savedInstanceStatePublic;
 
 
     @Override
@@ -145,13 +153,17 @@ public class MainActivity extends AppCompatActivity {
         // getDataFromDB = findViewById(R.id.proses);
         setPriority = findViewById(R.id.show);
         getRoutes = findViewById(R.id.show_arrow);
+        clearBtn = findViewById(R.id.clearBtn);
+        switchBtn = findViewById(R.id.switchSourceDest);
+
+        getRoutes.setVisibility(View.INVISIBLE);
 
 
         getRoutes.setVisibility(View.INVISIBLE);
         setPriority.setVisibility(View.INVISIBLE);
 
-        AutoCompleteTextView acSource = findViewById(R.id.autocomplete_source);
-        AutoCompleteTextView acDest = findViewById(R.id.autocomplete_dest);
+        acSource = findViewById(R.id.autocomplete_source);
+        acDest = findViewById(R.id.autocomplete_dest);
         String[] acWisata = getResources().getStringArray(R.array.places_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, acWisata);
         acSource.setAdapter(adapter);
@@ -200,6 +212,29 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
                 Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        switchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!acSource.getText().toString().isEmpty() && !acDest.getText().toString().isEmpty()) {
+                    String source = acSource.getText().toString();
+                    String destination = acDest.getText().toString();
+                    acDest.setText(source);
+                    acSource.setText(destination);
+                } else {
+                    Toast.makeText(v.getContext(), "Fill Source & Destination", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acDest.setText(null);
+                acSource.setText(null);
             }
         });
 
@@ -629,9 +664,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dialogForm() {
-        bobotJarak = 0;
-        bobotKepadatan = 0;
-        bobotWisata = 0;
 
         dialog = new AlertDialog.Builder(MainActivity.this);
         inflater = getLayoutInflater();
@@ -742,7 +774,10 @@ public class MainActivity extends AppCompatActivity {
                 dialogForm();
             } else {
                 String bobot = "Jarak : " + bobotJarak + ", Wisata : " + bobotWisata + ", Kepadatan : " + bobotKepadatan;
+                getRoutes.setVisibility(View.VISIBLE);
                 Log.d("bobot", bobot);
+
+
                 dialog.dismiss();
             }
         });
@@ -832,6 +867,36 @@ public class MainActivity extends AppCompatActivity {
                         .title("East Cost Surabaya"));
             }
         }));
+    }
+
+    public void getRoutes() {
+        if (bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
+
+            //mengambil source and destination dari inputan
+            for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
+                if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                    getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
+                    Log.d("getSource", String.valueOf(getSource));
+                }
+                if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                    getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
+                    Log.d("getDest", String.valueOf(getDest));
+                }
+            }
+
+            //untuk proses kedua
+            if (getSource != 1000 && getDest != 1000) {
+                dfs.getTemp().clear();
+                dfs.printAllPaths(graph, getSource, getDest);
+                weightedProduct();
+                //   showMap(savedInstanceState);
+            } else {
+                Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_SHORT);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
+            Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

@@ -8,142 +8,148 @@
     android:orientation="vertical"
     tools:context="com.yudahendriawan.ProjectTugasAkhir.MainActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:orientation="vertical">
-
-                <AutoCompleteTextView
-                    android:id="@+id/autocomplete_source"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:inputType="text"
-                    android:layout_marginLeft="10dp"
-                    android:background="@android:drawable/editbox_background_normal"
-                    android:hint="Fill your source"
-                    android:maxLines="1" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/autocomplete_dest"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:inputType="text"
-                    android:background="@android:drawable/editbox_background_normal"
-                    android:hint="Fill your destination"
-                    android:maxLines="1" />
-                <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-                <!--            android:layout_width="20dp"-->
-                <!--            android:layout_height="20dp"/>-->
-            </LinearLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/show"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="fill"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/font_red"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:text="Bobot"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="#2b569a"
-
-
-                    />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:paddingTop="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-
-            <!--            <Button-->
-            <!--                android:id="@+id/proses"-->
-            <!--                android:layout_width="200dp"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_margin="10dp"-->
-            <!--                android:background="@drawable/font_red"-->
-            <!--                android:clickable="true"-->
-            <!--                android:focusable="true"-->
-            <!--                android:foreground="?android:attr/selectableItemBackground"-->
-            <!--                android:text="Get DATA"-->
-            <!--                android:textColor="@android:color/white" />-->
-
-            <Button
-                android:id="@+id/show_arrow"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:background="@drawable/font_red"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:text="GET YOUR ROUTE"
-                android:textColor="@android:color/white" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         mapbox:mapbox_cameraTargetLat="-7.285"
         mapbox:mapbox_cameraTargetLng="112.795"
-        mapbox:mapbox_cameraZoom="10">
+        mapbox:mapbox_cameraZoom="10"
+        tools:background="@drawable/maps">
 
-        <Button
-            android:id="@+id/showResult"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="0.2"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autocomplete_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:hint="Fill your source"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autocomplete_dest"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:hint="Fill your destination"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+                    <!--            android:layout_width="20dp"-->
+                    <!--            android:layout_height="20dp"/>-->
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:background="@android:color/transparent"
+                    android:gravity="center">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/switchSourceDest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+
+                        android:layout_gravity="fill"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:src="@drawable/sort"
+                        android:background="@drawable/font_red"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="Bobot"
+                        android:textColor="@android:color/white"
+                        app:backgroundTint="#2b569a"
+
+
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+
+                <Button
+                    android:id="@+id/clearBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/font_red"
+                    android:clickable="true"
+                    android:layout_marginLeft="20dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="Clear"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/show"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.3"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/font_red"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="priority"
+                    android:textColor="@android:color/white" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/show_arrow"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
-            android:background="@drawable/font_red"
+
+            android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
             android:focusable="true"
+            android:src="@drawable/send"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Show"
             android:textColor="@android:color/white" />
 
         <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->

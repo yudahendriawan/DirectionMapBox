@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat="-7.285"
         mapbox:mapbox_cameraTargetLng="112.795"
+
         mapbox:mapbox_cameraZoom="10"
         tools:background="@drawable/maps">
 
@@ -137,6 +138,10 @@
 
 
         </LinearLayout>
+
+
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/show_arrow"

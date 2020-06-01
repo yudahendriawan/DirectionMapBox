@@ -2,9 +2,7 @@ package com.yudahendriawan.ProjectTugasAkhir;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -44,7 +41,6 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.yudahendriawan.ProjectTugasAkhir.model.Criteria;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
-import com.yudahendriawan.ProjectTugasAkhir.wisata.WisataActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,7 +66,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
 
 /**
- * Use Mapbox Java Services to request directions from the Mapbox Directions API and show the
+ * Use Mapbox Java Services to request directions from the Mapbox Directions API and setPriority the
  * route with a LineLayer.
  */
 public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFromDatabase {
@@ -96,14 +92,14 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
     String routePointList = "";
     String origin_ = "";
     String destination_ = "";
-
-    Button proses, show;
+    public static Button getDataFromDB;
+    Button setPriority;
     EditText inputSource, inputDest;
-    Button show_arrow;
+    Button getRoutes;
 
     int vertices = 31;
-    int getSource;
-    int getDest;
+    int getSource = 1000;
+    int getDest = 1000;
 
     ProgressBar progressBar;
 
@@ -121,12 +117,8 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
     int bobotWisata;
     int bobotKepadatan;
 
+    public static ProgressBar cobaProgressBar;
 
-    String jrk;
-    String wst;
-    String pdt;
-
-    //  FloatingActionButton listWisata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,13 +135,15 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        proses = findViewById(R.id.proses);
-        show = findViewById(R.id.show);
-        show_arrow = findViewById(R.id.show_arrow);
+        //binding
+        getDataFromDB = findViewById(R.id.proses);
+        setPriority = findViewById(R.id.show);
+        getRoutes = findViewById(R.id.show_arrow);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
-        MenuActivity menuActivity = new MenuActivity();
+        getRoutes.setVisibility(View.INVISIBLE);
+        setPriority.setVisibility(View.INVISIBLE);
 
         AutoCompleteTextView acSource = findViewById(R.id.autocomplete_source);
         AutoCompleteTextView acDest = findViewById(R.id.autocomplete_dest);
@@ -158,41 +152,46 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
         acSource.setAdapter(adapter);
         acDest.setAdapter(adapter);
 
-
         graph = new Graph(vertices, this);
         dfs = new DepthFirstSearch();
-        Places place = new Places();
 
-        show.setOnClickListener(v -> dialogForm());
+        setPriority.setOnClickListener(v -> dialogForm());
 
-
-        proses.setOnClickListener(v -> {
+        getDataFromDB.setOnClickListener(v -> {
             graph.addEdgeDB();
             Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
+            setPriority.setVisibility(View.VISIBLE);
+            getRoutes.setVisibility(View.VISIBLE);
         });
 
 
-        show_arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
-                    for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
-                        if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
-                            getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
-                            Log.d("getSource", String.valueOf(getSource));
-                        }
-                        if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
-                            getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
-                            Log.d("getSource", String.valueOf(getDest));
-                        }
+        getRoutes.setOnClickListener(v -> {
+            if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
+
+                //mengambil source and destination dari inputan
+                for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
+                    if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                        getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
+                        Log.d("getSource", String.valueOf(getSource));
                     }
+                    if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                        getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
+                        Log.d("getDest", String.valueOf(getDest));
+                    }
+                }
+
+                //untuk proses kedua
+                if (getSource != 1000 && getDest != 1000) {
+                    dfs.getTemp().clear();
                     dfs.printAllPaths(graph, getSource, getDest);
                     weightedProduct();
                     showMap(savedInstanceState);
                 } else {
-                    Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
-                    Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_SHORT);
                 }
+            } else {
+                Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
+                Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -360,7 +359,6 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
             destination_ = "";
             routePointList = "";
 
-
             //akan digunakan utk menampung criteria
             Double[][] data = new Double[dfs.getTemp().size()][3];
             Log.d("tempSize", String.valueOf(dfs.getTemp().size()));
@@ -374,14 +372,8 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
                 //   System.out.print("[C" + (i + 1) + "] {");
                 for (int j = 0; j < 3; j++) {
                     data[i][j] = dfs.getTemp().get(i).get(j);
-//                System.out.print(+data[i][j]);
-//                if (j == 2) {
-//                    System.out.print("");
-//                } else {
-//                    System.out.print(",");
-//                }
                 }
-                // System.out.println("}");
+
             }
 
             //menyimpan data dalam bentuk arrayList
@@ -512,7 +504,6 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
             // }
 
 
-
             //klennteng sangar agung, pantai ria kenjeran
             routeURL = "-7.247226, 112.802257/-7.249400, 112.800501";
 
@@ -527,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements Graph.OnGetDataFr
 
 
         } else {
-//            Toast.makeText(MainActivity.this, "Check Internet Conn..", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "Check Internet Conn..", Toast.LENGTH_SHORT).setPriority();
 
         }
     }

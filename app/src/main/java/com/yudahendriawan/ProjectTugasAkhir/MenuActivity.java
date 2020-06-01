@@ -117,7 +117,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
+        // setPriority it
         alertDialog.show();
     }
 
@@ -238,7 +238,7 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
+        // setPriority it
         alertDialog.show();
     }
 

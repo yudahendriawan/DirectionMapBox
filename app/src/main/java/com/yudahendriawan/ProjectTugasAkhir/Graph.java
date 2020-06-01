@@ -2,6 +2,7 @@ package com.yudahendriawan.ProjectTugasAkhir;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -289,7 +290,7 @@ class Graph {
         //  adjacencyList = null;
 
         Log.d("getData", "Method getData()");
-
+        boolean isSuccess = true;
 
         ArrayList<Node> nodeData = new ArrayList<>();
         for (double[] dataKu : data) {
@@ -307,7 +308,13 @@ class Graph {
 
             nodeData.add(node);
             adjacencyList[node.getSource()].add(node);
-            Toast.makeText(context, "Get Data Succes", Toast.LENGTH_SHORT).show();
+
+            if (isSuccess) {
+                Toast.makeText(context, "Get Data Succes", Toast.LENGTH_SHORT).show();
+                //MainActivity.cobaProgressBar.setVisibility(View.GONE);
+                MainActivity.getDataFromDB.setVisibility(View.GONE);
+                isSuccess = false;
+            }
 
         }
         Log.d("nodeData", nodeData.toString());

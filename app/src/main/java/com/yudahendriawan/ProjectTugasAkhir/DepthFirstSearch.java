@@ -33,7 +33,7 @@ public class DepthFirstSearch {
         ArrayList<Double> roadDensityInteger;
         boolean test = true;
 
-        //proses DFS
+        //getDataFromDB DFS
         LinkedList<Node> list = graph.adjacencyList[start];
 
         for (int i = 0; i < list.size(); i++) {

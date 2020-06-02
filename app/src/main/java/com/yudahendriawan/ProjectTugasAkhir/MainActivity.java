@@ -16,10 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mapbox.android.core.permissions.PermissionsListener;
+import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -32,6 +35,10 @@ import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -70,7 +77,8 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
  * Use Mapbox Java Services to request directions from the Mapbox Directions API and setPriority the
  * route with a LineLayer.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallback,*/
+        PermissionsListener {
 
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
@@ -78,10 +86,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String ICON_SOURCE_ID = "icon-source-id";
     private static final String RED_PIN_ICON_ID = "red-pin-icon-id";
     private MapView mapView;
+    private MapboxMap mapboxMap;
     private DirectionsRoute currentRoute;
     private MapboxDirections client;
     private Point origin;
     private Point destination;
+    private PermissionsManager permissionsManager;
 
     //ProgressDialog progressDialog;
     Spinner spinner1, spinner2, spinner3;
@@ -98,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     EditText inputSource, inputDest;
     public static FloatingActionButton getRoutes;
     FloatingActionButton switchBtn;
+    FloatingActionButton getCurrentLocation;
     Button clearBtn;
 
     int vertices = 31;
@@ -121,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     int spinnerSelected3 = 0;
 
 
-
     int bobotJarak;
     int bobotWisata;
     int bobotKepadatan;
@@ -131,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static ProgressBar cobaProgressBar;
 
-    Bundle savedInstanceStatePublic;
+    TextView randomPrior;
 
 
     @Override
@@ -144,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_main);
-        showMapStandard();
+
 
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -155,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
         getRoutes = findViewById(R.id.show_arrow);
         clearBtn = findViewById(R.id.clearBtn);
         switchBtn = findViewById(R.id.switchSourceDest);
+        getCurrentLocation = findViewById(R.id.current_location);
+        mapView = findViewById(R.id.mapView);
+        progressBar = findViewById(R.id.progress_loader);
 
         getRoutes.setVisibility(View.INVISIBLE);
 
@@ -171,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
 
         graph = new Graph(vertices, this);
         dfs = new DepthFirstSearch();
+
+        showMapStandard();
 
         setPriority.setOnClickListener(v -> dialogForm());
 
@@ -202,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //untuk proses kedua
                 if (getSource != 1000 && getDest != 1000) {
+                    getRoutes.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
                     dfs.getTemp().clear();
                     dfs.printAllPaths(graph, getSource, getDest);
                     weightedProduct();
@@ -210,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_SHORT);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "Input Bobot", Toast.LENGTH_SHORT);
                 Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
             }
         });
@@ -235,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 acDest.setText(null);
                 acSource.setText(null);
+                Toast.makeText(v.getContext(), "Clear success", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -319,6 +336,9 @@ public class MainActivity extends AppCompatActivity {
                         getString(R.string.directions_activity_toast_message),
                         currentRoute.distance()), Toast.LENGTH_SHORT).show();
 
+                getRoutes.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {
                         @Override
@@ -342,6 +362,8 @@ public class MainActivity extends AppCompatActivity {
                 Timber.e("Error: " + throwable.getMessage());
                 Toast.makeText(MainActivity.this, "Error: " + throwable.getMessage(),
                         Toast.LENGTH_SHORT).show();
+                getRoutes.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -567,9 +589,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMap(Bundle savedInstanceState) {
-        mapView = findViewById(R.id.mapView);
+
         mapView.onCreate(savedInstanceState);
         mapView.onStart();
+
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull final MapboxMap mapboxMap) {
@@ -588,6 +611,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                         pointList.clear();
                         Log.d("pointList clear", pointList.toString());
+
+                        //to hide compass
+
+                        getCurrentLocation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // enableLocationComponent(style);
+                            }
+                        });
+
+                        mapboxMap.getUiSettings().setCompassEnabled(false);
+
                         mapboxMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(-7.295, 112.802))
                                 .title("Taman Harmoni"));
@@ -671,9 +706,12 @@ public class MainActivity extends AppCompatActivity {
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
+
         spinner1 = dialogView.findViewById(R.id.spinnerPriority1);
         spinner2 = dialogView.findViewById(R.id.spinnerPriority2);
         spinner3 = dialogView.findViewById(R.id.spinnerPriority3);
+        randomPrior = dialogView.findViewById(R.id.randomPriority);
+
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.bobot1, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -690,6 +728,28 @@ public class MainActivity extends AppCompatActivity {
         spinner1.setSelection(spinnerSelected1);
         spinner2.setSelection(spinnerSelected2);
         spinner3.setSelection(spinnerSelected3);
+
+        randomPrior.setOnClickListener(v -> {
+//                int randomSpinner1 = 1;
+//                int randomSpinner2= 1;
+//                int randomSpinnner3 = 1;
+            boolean check = true;
+
+            while (check) {
+                int randomSpinner1 = (int) (Math.random() * 3 + 1);
+                int randomSpinner2 = (int) (Math.random() * 3 + 1);
+                int randomSpinnner3 = (int) (Math.random() * 3 + 1);
+                Log.d("1-2-3 = ", randomSpinner1 + "," + randomSpinner2 + ", " + randomSpinnner3);
+                if (randomSpinner1 != randomSpinner2 && randomSpinner1 != randomSpinnner3 && randomSpinner2 != randomSpinnner3) {
+                    spinner1.setSelection(randomSpinner1);
+                    spinner2.setSelection(randomSpinner2);
+                    spinner3.setSelection(randomSpinnner3);
+                    check = false;
+                }
+            }
+        });
+
+
 
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -797,11 +857,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void showMapStandard() {
-        mapView = findViewById(R.id.mapView);
+        //mapView = findViewById(R.id.mapView);
         mapView.onStart();
         mapView.getMapAsync(mapboxMap -> mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
+
+                getCurrentLocation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        enableLocationComponent(style);
+                    }
+                });
+
+
+                mapboxMap.getUiSettings().setCompassEnabled(false);
                 mapboxMap.addMarker(new MarkerOptions()
                         .position(new LatLng(-7.295, 112.802))
                         .title("Taman Harmoni"));
@@ -899,5 +969,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) {
+        // Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+        if (granted) {
+            mapboxMap.getStyle(new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    enableLocationComponent(style);
+                }
+            });
+        } else {
+            //  Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    @SuppressWarnings({"MissingPermission"})
+    private void enableLocationComponent(@NonNull Style loadedMapStyle) {
+// Check if permissions are enabled and if not request
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
+
+// Get an instance of the component
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
+
+// Activate with options
+            locationComponent.activateLocationComponent(
+                    LocationComponentActivationOptions.builder(this, loadedMapStyle).build());
+
+// Enable to make component visible
+            locationComponent.setLocationComponentEnabled(true);
+
+// Set the component's camera mode
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+
+// Set the component's render mode
+            locationComponent.setRenderMode(RenderMode.COMPASS);
+        } else {
+            permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(this);
+        }
+    }
+
+//    @Override
+//    public void onMapReady(@NonNull MapboxMap mapboxMap) {
+//        MainActivity.this.mapboxMap = mapboxMap;
+//
+//        mapboxMap.setStyle(Style.MAPBOX_STREETS,
+//                new Style.OnStyleLoaded() {
+//                    @Override
+//                    public void onStyleLoaded(@NonNull Style style) {
+//                        enableLocationComponent(style);
+//                    }
+//                });
+//    }
 }
 

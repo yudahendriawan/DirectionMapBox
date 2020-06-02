@@ -27,7 +27,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
@@ -36,7 +36,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="120dp"
                     android:layout_weight="0.2"
                     android:background="@android:color/transparent"
                     android:orientation="vertical">
@@ -47,20 +47,26 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@android:drawable/editbox_background_normal"
-                        android:hint="Fill your source"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Source"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/autocomplete_dest"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@android:drawable/editbox_background_normal"
-                        android:hint="Fill your destination"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Destination"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:paddingLeft="20dp"
+                        android:layout_marginStart="10dp"
+                        android:paddingStart="20dp" />
                     <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
                     <!--            android:layout_width="20dp"-->
                     <!--            android:layout_height="20dp"/>-->
@@ -81,12 +87,12 @@
                         android:layout_height="70dp"
 
                         android:layout_gravity="fill"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:src="@drawable/sort"
                         android:background="@drawable/font_red"
+                        android:backgroundTint="@color/colorPrimary"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:src="@drawable/sort"
                         android:text="Bobot"
                         android:textColor="@android:color/white"
                         app:backgroundTint="#2b569a"
@@ -98,21 +104,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+                android:background="@android:color/transparent"
+                android:orientation="horizontal">
 
 
                 <Button
                     android:id="@+id/clearBtn"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="0.3"
                     android:background="@drawable/font_red"
                     android:clickable="true"
-                    android:layout_marginLeft="20dp"
                     android:focusable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:text="Clear"
@@ -122,10 +127,10 @@
                     android:id="@+id/show"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
-                    android:layout_weight="0.3"
-                    android:layout_marginRight="20dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="0.3"
                     android:background="@drawable/font_red"
                     android:clickable="true"
                     android:focusable="true"
@@ -140,22 +145,52 @@
         </LinearLayout>
 
 
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/show_arrow"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="20dp"
+            android:orientation="vertical">
 
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/send"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:textColor="@android:color/white" />
+            <ProgressBar
+                android:id="@+id/progress_loader"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:indeterminateTint="@color/colorPrimary"
+                android:visibility="invisible"
+                tools:targetApi="lollipop" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/show_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+
+                android:layout_margin="20dp"
+
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/send"
+                android:textColor="@android:color/white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_margin="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/location"
+                android:textColor="@android:color/white"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
 
         <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
         <!--            android:id="@+id/listWisata"-->

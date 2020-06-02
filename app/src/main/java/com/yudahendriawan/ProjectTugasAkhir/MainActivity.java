@@ -3,6 +3,7 @@ package com.yudahendriawan.ProjectTugasAkhir;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,7 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.yudahendriawan.ProjectTugasAkhir.model.Criteria;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
+import com.yudahendriawan.ProjectTugasAkhir.resultmap.ResultMapActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     public static FloatingActionButton getRoutes;
     FloatingActionButton switchBtn;
     FloatingActionButton getCurrentLocation;
+    FloatingActionButton getListWisata;
     Button clearBtn;
 
     int vertices = 31;
@@ -143,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
     TextView randomPrior;
 
+    int[] pathResultFixInt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +173,8 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         getCurrentLocation = findViewById(R.id.current_location);
         mapView = findViewById(R.id.mapView);
         progressBar = findViewById(R.id.progress_loader);
+        //getListWisata = findViewById(R.id);
+        getListWisata = findViewById(R.id.fab_listwisata);
 
         getRoutes.setVisibility(View.INVISIBLE);
 
@@ -188,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         showMapStandard();
 
         setPriority.setOnClickListener(v -> dialogForm());
+        getListWisata.setVisibility(View.GONE);
 
         graph.addEdgeDB();
         Toast.makeText(this, "Get Data from DB", Toast.LENGTH_SHORT).show();
@@ -227,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                     Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_SHORT);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "Input Source n Dest", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Priority hasn't been set", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -252,6 +260,17 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                 acDest.setText(null);
                 acSource.setText(null);
                 Toast.makeText(v.getContext(), "Clear success", Toast.LENGTH_SHORT).show();
+                acSource.setFocusable(true);
+                showMapStandard();
+            }
+        });
+
+        getListWisata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ResultMapActivity.class);
+                intent.putExtra("pathResultFix", pathResultFixInt);
+                startActivity(intent);
             }
         });
 
@@ -338,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
                 getRoutes.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                getListWisata.setVisibility(View.VISIBLE);
 
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {
@@ -510,10 +530,11 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
             Double[] pathResultFix = Arrays.copyOfRange(pathResult, 3, pathResult.length);
 
             //change double to int
-            int[] pathResultFixInt = new int[pathResultFix.length];
+            pathResultFixInt = new int[pathResultFix.length];
             for (int i = 0; i < pathResultFixInt.length; i++) {
                 pathResultFixInt[i] = pathResultFix[i].intValue();
             }
+
 
             //log cat in debug list point
             String storePointList = "[";

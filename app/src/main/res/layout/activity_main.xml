@@ -151,6 +151,20 @@
             android:layout_gravity="bottom|end"
             android:orientation="vertical">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_listwisata"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+
+                android:layout_margin="20dp"
+
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/getwisata"
+                android:textColor="@android:color/white" />
+
             <ProgressBar
                 android:id="@+id/progress_loader"
                 style="?android:attr/progressBarStyle"
@@ -159,7 +173,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="20dp"
                 android:indeterminateTint="@color/colorPrimary"
-                android:visibility="invisible"
+                android:visibility="gone"
                 tools:targetApi="lollipop" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -187,7 +201,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/location"
                 android:textColor="@android:color/white"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 

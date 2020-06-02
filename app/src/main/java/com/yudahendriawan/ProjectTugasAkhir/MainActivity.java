@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                 Toast.makeText(v.getContext(), "Clear success", Toast.LENGTH_SHORT).show();
                 acSource.setFocusable(true);
                 showMapStandard();
+                getListWisata.setVisibility(View.GONE);
             }
         });
 
@@ -392,6 +393,15 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     public void onResume() {
         super.onResume();
         showMapStandard();
+        getListWisata.setVisibility(View.GONE);
+
+        boolean click = true;
+        while (click) {
+            if (bobotJarak != 0) {
+                getRoutes.performClick();
+            }
+            click = false;
+        }
 
         // mapView.onResume();
     }
@@ -400,6 +410,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     protected void onStart() {
         super.onStart();
         showMapStandard();
+
     }
 
     @Override
@@ -414,11 +425,6 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         mapView.onPause();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
 
     @Override
     protected void onDestroy() {
@@ -1034,6 +1040,43 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //String myString = savedInstanceState.getString("MyString");
+
+        String getSourceSaved = savedInstanceState.getString("source");
+        String getDestinationSaved = savedInstanceState.getString("destination");
+        int getBobotJarakSaved = savedInstanceState.getInt("bobotJarak");
+        int getBobotWisataSaved = savedInstanceState.getInt("bobotWisata");
+        int getBobotKepadatanSaved = savedInstanceState.getInt("bobotKepadatan");
+
+
+        bobotJarak = getBobotJarakSaved;
+        bobotKepadatan = getBobotKepadatanSaved;
+        bobotWisata = getBobotWisataSaved;
+
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+
+        String sourceSaved = acSource.getText().toString();
+        String destinationSaved = acDest.getText().toString();
+
+        outState.putString("source", sourceSaved);
+        outState.putString("destination", destinationSaved);
+        outState.putInt("bobotJarak", bobotJarak);
+        outState.putInt("bobotKepadatan", bobotKepadatan);
+        outState.putInt("bobotWisata", bobotWisata);
+
     }
 
 //    @Override

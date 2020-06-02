@@ -21,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/nunito"
         android:text="Sign Up"
-        android:fontFamily="sans-serif-condensed"
+
         android:layout_marginTop="70dp"
         android:textColor="#404040"
         android:textSize="30sp"
@@ -39,6 +40,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
+            android:fontFamily="@font/nunito"
             android:layout_height="wrap_content"
             android:hint="Name" />
 
@@ -57,6 +59,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
             android:hint="Username" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +76,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
             android:hint="Password"
             android:inputType="textPassword" />
 
@@ -87,6 +91,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:background="@drawable/font_red"
+        android:fontFamily="@font/nunito_bold"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="10dp"
         android:visibility="visible"

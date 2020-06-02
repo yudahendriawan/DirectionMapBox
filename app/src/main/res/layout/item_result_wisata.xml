@@ -26,6 +26,7 @@
             android:layout_margin="10dp"
             android:gravity="start|center"
             android:hint="Pantai Ria Kenjeran"
+            android:fontFamily="@font/nunito"
 
             android:paddingStart="20dp"
             android:paddingLeft="20dp"

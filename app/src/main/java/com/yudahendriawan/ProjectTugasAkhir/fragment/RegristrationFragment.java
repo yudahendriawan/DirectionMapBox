@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,16 @@ public class RegristrationFragment extends Fragment {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmInput();
+                progressBar_Loader.setVisibility(View.VISIBLE);
+                btn_register.setVisibility(View.GONE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        confirmInput();
+                    }
+                }, 1500);
+
             }
         });
         return view;
@@ -85,8 +95,7 @@ public class RegristrationFragment extends Fragment {
 //        String nama = name.getEditText().getText().toString().trim();
 //        String username = user_name.getEditText().getText().toString().trim();
 //        String userpassword = user_password.getEditText().getText().toString().trim();
-        progressBar_Loader.setVisibility(View.VISIBLE);
-        btn_register.setVisibility(View.GONE);
+
 
         Call<User> call = MenuActivity.apiInterface.performRegristration(nameInput, usernameInput, passwordInput);
 
@@ -170,6 +179,8 @@ public class RegristrationFragment extends Fragment {
 
     public void confirmInput() {
         if (!validateName() | !validateUsername() | !validatePassword()) {
+            progressBar_Loader.setVisibility(View.GONE);
+            btn_register.setVisibility(View.VISIBLE);
             return;
         } else {
             performRegistration();

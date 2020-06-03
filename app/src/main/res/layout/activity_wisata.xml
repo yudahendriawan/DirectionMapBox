@@ -2,18 +2,18 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:id="@+id/swipe_refresh"
-    tools:context=".wisata.WisataActivity"
     android:background="@color/colorPrimary"
-    android:columnCount="3">
+    android:columnCount="3"
+    android:padding="10dp"
+    tools:context=".wisata.WisataActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
-        tools:listitem="@layout/item_wisata"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/item_wisata"></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

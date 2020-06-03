@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,16 @@ public class LoginFragment extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performLogin();
+                progress_loader.setVisibility(View.VISIBLE);
+                btn_login.setVisibility(View.GONE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        performLogin();
+                    }
+                }, 1500);
+
             }
         });
 
@@ -90,8 +100,6 @@ public class LoginFragment extends Fragment {
         String username = user_name.getEditText().getText().toString();
         String userpassword = user_password.getEditText().getText().toString();
 
-        progress_loader.setVisibility(View.VISIBLE);
-        btn_login.setVisibility(View.GONE);
 
         Call<User> call = MenuActivity.apiInterface.performUserLogin(username, userpassword);
         call.enqueue(new Callback<User>() {

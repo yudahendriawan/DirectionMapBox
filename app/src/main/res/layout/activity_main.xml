@@ -47,28 +47,32 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/nunito"
                         android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/nunito"
                         android:hint="Source"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:paddingStart="20dp"
                         android:paddingLeft="20dp"
-                        android:paddingStart="20dp" />
+                        android:paddingEnd="20dp"
+                        android:paddingRight="20dp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/autocomplete_dest"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/nunito"
                         android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/nunito"
                         android:hint="Destination"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:paddingStart="20dp"
                         android:paddingLeft="20dp"
-                        android:layout_marginStart="10dp"
-                        android:paddingStart="20dp" />
+                        android:paddingEnd="20dp"
+                        android:paddingRight="20dp" />
                     <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
                     <!--            android:layout_width="20dp"-->
                     <!--            android:layout_height="20dp"/>-->
@@ -118,10 +122,10 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="0.3"
-                    android:fontFamily="@font/nunito_bold"
                     android:background="@drawable/font_red"
                     android:clickable="true"
                     android:focusable="true"
+                    android:fontFamily="@font/nunito_bold"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:text="Clear"
                     android:textColor="@android:color/white" />
@@ -134,10 +138,10 @@
                     android:layout_margin="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="0.3"
-                    android:fontFamily="@font/nunito_bold"
                     android:background="@drawable/font_red"
                     android:clickable="true"
                     android:focusable="true"
+                    android:fontFamily="@font/nunito_bold"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:text="priority"
                     android:textColor="@android:color/white" />

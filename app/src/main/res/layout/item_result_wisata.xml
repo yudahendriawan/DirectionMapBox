@@ -19,7 +19,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:cardCornerRadius="25dp">
+            app:cardCornerRadius="50dp">
 
             <ImageView
                 android:id="@+id/img_result_wisata"

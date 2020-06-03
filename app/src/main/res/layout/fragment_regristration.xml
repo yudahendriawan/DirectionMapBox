@@ -33,23 +33,32 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
+            android:background="@drawable/custom_input_edit_text"
+            android:drawableStart="@drawable/ic_contact"
+            android:drawableLeft="@drawable/ic_contact"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/nunito"
-            android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:paddingStart="12dp"
+
+            android:layout_height="45dp"
+            android:hint="Name"
+            android:paddingLeft="12dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_name"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         app:counterEnabled="true"
@@ -58,16 +67,23 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_input_edit_text"
+            android:drawableStart="@drawable/ic_person"
+            android:drawableLeft="@drawable/ic_person"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/nunito"
-            android:hint="Username" />
+            android:paddingStart="12dp"
+            android:hint="Username"
+            android:paddingLeft="12dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_password"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         app:errorEnabled="true"
@@ -75,10 +91,16 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_input_edit_text"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableLeft="@drawable/ic_lock"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/nunito"
+            android:paddingStart="12dp"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingLeft="12dp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +111,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/font_red"
         android:fontFamily="@font/nunito_bold"
         android:foreground="?android:attr/selectableItemBackground"

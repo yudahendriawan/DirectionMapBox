@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Login"
+        android:layout_marginTop="80dp"
 
         android:fontFamily="@font/nunito"
-        android:layout_marginTop="80dp"
+        android:text="Login"
         android:textColor="#404040"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -45,19 +45,33 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_name"
         android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="80dp"
 
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         app:counterEnabled="true"
+
         app:counterMaxLength="15"
+        android:gravity="center"
+        app:helperTextTextColor="@color/colorPrimary"
+
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
+            android:layout_height="45dp"
+
+            android:background="@drawable/custom_input_edit_text"
+            android:drawableStart="@drawable/ic_contact"
+            android:drawableLeft="@drawable/ic_contact"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/nunito"
-            android:layout_height="wrap_content"
-            android:hint="Username" />
+            android:paddingStart="12dp"
+            android:hint="Username"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="12dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,18 +90,28 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_password"
         android:layout_width="250dp"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_marginTop="10dp"
+        app:helperTextTextColor="@color/colorPrimary"
+
         app:errorEnabled="true"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableLeft="@drawable/ic_lock"
+            android:paddingStart="12dp"
+            android:background="@drawable/custom_input_edit_text"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/nunito"
+
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingLeft="12dp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -98,8 +122,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/nunito_bold"
         android:background="@drawable/font_red"
+        android:fontFamily="@font/nunito_bold"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Login"
         android:textColor="@android:color/white"
@@ -123,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="New User? Register"
 

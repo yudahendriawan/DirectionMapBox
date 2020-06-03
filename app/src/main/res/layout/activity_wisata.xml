@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:padding="10dp"
     android:id="@+id/swipe_refresh"
     tools:context=".wisata.WisataActivity"
+    android:background="@color/colorPrimary"
     android:columnCount="3">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/swipe_refresh"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context=".wisata.WisataActivity"
     android:columnCount="3">
 
@@ -13,6 +14,8 @@
         android:id="@+id/recyclerview"
         tools:listitem="@layout/item_result_wisata"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_width="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

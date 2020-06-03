@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.yudahendriawan.ProjectTugasAkhir.R;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
+import com.yudahendriawan.ProjectTugasAkhir.model.Wisata;
 import com.yudahendriawan.ProjectTugasAkhir.util.Key;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class ResultMapActivity extends AppCompatActivity implements ResultView {
 
-    List<Places> places;
+    List<Wisata> wisatas;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
     ResultPresenter presenter;
@@ -30,7 +31,7 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_map);
 
-        getSupportActionBar().setTitle(Key.TITLE_WISATA);
+        getSupportActionBar().hide();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -43,6 +44,8 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
 
         presenter = new ResultPresenter(this);
         presenter.getData(pathFix);
+
+        // Toast.makeText(this,"Ditemukan "+adapter.getItemCount()+" wisata pada jalur",Toast.LENGTH_SHORT).show();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -64,12 +67,12 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
     }
 
     @Override
-    public void onGetResult(List<Places> placesList) {
+    public void onGetResult(List<Wisata> placesList) {
         adapter = new ResultMapAdapter(this, placesList, itemClickListener);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
-        placesList = places;
+        placesList = wisatas;
     }
 
     @Override

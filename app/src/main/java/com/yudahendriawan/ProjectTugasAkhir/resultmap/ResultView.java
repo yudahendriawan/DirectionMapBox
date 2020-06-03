@@ -11,7 +11,7 @@ public interface ResultView {
 
     void onHideLoading();
 
-    void onGetResult(List<Places> placesList);
+    void onGetResult(List<Wisata> placesWisata);
 
     void onErrorLoading(String message);
 }

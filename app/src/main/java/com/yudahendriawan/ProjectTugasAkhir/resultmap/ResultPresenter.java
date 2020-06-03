@@ -10,6 +10,8 @@ import com.yudahendriawan.ProjectTugasAkhir.model.Places;
 import com.yudahendriawan.ProjectTugasAkhir.model.Wisata;
 import com.yudahendriawan.ProjectTugasAkhir.wisata.WisataView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,38 +31,30 @@ public class ResultPresenter {
         view.onShowLoading();
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        Call<List<Places>> call = apiInterface.getPlaces();
+        Call<List<Wisata>> call = apiInterface.getWisata();
 
-        call.enqueue(new Callback<List<Places>>() {
+        call.enqueue(new Callback<List<Wisata>>() {
             @Override
-            public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
+            public void onResponse(@NotNull Call<List<Wisata>> call, @NotNull Response<List<Wisata>> response) {
                 view.onHideLoading();
 
-                List<Places> listPlaces = new ArrayList<>();
+                List<Wisata> listWisata = new ArrayList<>();
 
                 if (response.isSuccessful() && response.body() != null) {
                     for (int i = 0; i < response.body().size(); i++) {
                         for (int j = 0; j < pathFix.length; j++) {
                             if (response.body().get(i).getNumber() == pathFix[j]) {
-                                if (response.body().get(i).getType().equals("wisata")) {
-                                    listPlaces.add(response.body().get(i));
-//                                    listPlaces.get(i).setId(response.body().get(i).getId());
-//                                    listPlaces.get(i).setName(response.body().get(i).getName());
-//                                    listPlaces.get(i).setNumber(response.body().get(i).getNumber());
-//                                    listPlaces.get(i).setType(response.body().get(i).getType());
-//                                    listPlaces.get(i).setLatitude(response.body().get(i).getLatitude());
-//                                    listPlaces.get(i).setLongitude(response.body().get(i).getLatitude());
-//                                    Log.d("ListWisataHasil", response.body().get(i).getName());
-                                }
+                                listWisata.add(response.body().get(i));
+                                Log.d("listWisata", response.body().get(i).toString());
                             }
                         }
                     }
-                    view.onGetResult(listPlaces);
+                    view.onGetResult(listWisata);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Places>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<Wisata>> call, @NotNull Throwable t) {
                 view.onHideLoading();
                 view.onErrorLoading(t.getLocalizedMessage());
             }

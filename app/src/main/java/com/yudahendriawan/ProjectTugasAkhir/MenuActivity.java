@@ -29,12 +29,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MenuActivity extends AppCompatActivity implements LoginFragment.OnLoginFormActivityListener, MenuFragment.OnLogoutListener {
-//    CardView findRoute, wisata, login;
-//    Graph graph;
 
     public static PrefConfig prefConfig;
     public static ApiInterface apiInterface;
-    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,26 +89,22 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Hey " + prefConfig.readName() + ",\n Are you sure to Logout?")
+                .setMessage("Hey " + prefConfig.readName() + ",\nAre you sure to Logout?")
                 .setCancelable(false)
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        prefConfig.writeLoginStatus(false);
-                        prefConfig.writeName("User");
+                .setPositiveButton("YES", (dialog, id) -> {
+                    prefConfig.writeLoginStatus(false);
+                    prefConfig.writeName("User");
 
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, new LoginFragment())
-                                .commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new LoginFragment())
+                            .commit();
 
-                    }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
+                .setNegativeButton("NO", (dialog, id) -> {
+                    // if this button is clicked, just close
+                    // the dialog box and do nothing
+                    dialog.cancel();
                 });
 
         // create alert dialog
@@ -175,18 +168,6 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
                 dialog.cancel();
             }
         }).show();
-//                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, close
-//                        // current activity
-//                        MainActivity.this.finish();
-//                    }
-//                })
-//                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, just close
-//                        // the dialog box and do nothing
-//                        dialog.cancel();
     }
 
     public void profil() {
@@ -227,12 +208,10 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
                         MenuActivity.this.finish();
                     }
                 })
-                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
+                .setNegativeButton("Tidak", (dialog, id) -> {
+                    // if this button is clicked, just close
+                    // the dialog box and do nothing
+                    dialog.cancel();
                 });
 
         // create alert dialog
@@ -242,26 +221,6 @@ public class MenuActivity extends AppCompatActivity implements LoginFragment.OnL
         alertDialog.show();
     }
 
-    public void version() {
-        Date currentTime = Calendar.getInstance().getTime();
-        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
 
-        // set title
-        alertDialogBuilder.setTitle(null);
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Version Apps : " + currentDateTimeString)
-                .setTitle("About")
-                .setCancelable(false).setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
-
-    }
 
 }

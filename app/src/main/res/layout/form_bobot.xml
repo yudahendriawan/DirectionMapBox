@@ -15,27 +15,6 @@
         android:gravity="center"
         android:text="Please Choose Priority" />
 
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:paddingLeft="20dp"-->
-    <!--        android:text="Jarak"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/bobotJarak"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:inputType="number"-->
-    <!--        android:layout_marginLeft="20dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:layout_marginRight="20dp"-->
-    <!--        android:background="@android:drawable/editbox_background_normal"-->
-    <!--        android:hint="Bobot Jarak" />-->
-
     <Spinner
         android:id="@+id/spinnerPriority1"
         android:layout_width="match_parent"
@@ -85,53 +64,5 @@
         android:textStyle="bold">
 
     </TextView>
-
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_margin="20dp"-->
-    <!--        android:layout_height="wrap_content"/>-->
-
-    <!--    <TextView-->
-    <!--        android:layout_width="200dp"-->
-    <!--        android:layout_height="30dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:paddingStart="20dp"-->
-    <!--        android:paddingLeft="20dp"-->
-    <!--        android:text="Wisata"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/bobotWisata"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:inputType="number"-->
-    <!--        android:layout_marginLeft="20dp"-->
-    <!--        android:layout_marginRight="20dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:background="@android:drawable/editbox_background_normal"-->
-    <!--        android:hint="Bobot Wisata" />-->
-
-    <!--    <TextView-->
-    <!--        android:layout_width="200dp"-->
-    <!--        android:layout_height="30dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:paddingStart="20dp"-->
-    <!--        android:paddingLeft="20dp"-->
-    <!--        android:text="Kepadatan"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/bobotKepadatan"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:inputType="number"-->
-    <!--        android:layout_marginRight="20dp"-->
-    <!--        android:layout_marginLeft="20dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:background="@android:drawable/editbox_background_normal"-->
-    <!--        android:hint="Bobot Kepadatan" />-->
-
 
 </LinearLayout>

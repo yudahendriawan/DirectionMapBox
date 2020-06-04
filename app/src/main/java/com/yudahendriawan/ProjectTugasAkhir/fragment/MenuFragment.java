@@ -39,8 +39,8 @@ import static com.yudahendriawan.ProjectTugasAkhir.MenuActivity.prefConfig;
  */
 public class MenuFragment extends Fragment {
 
-    CardView findRoute, wisata, logout;
-    TextView textViewWelcome, currentTime;
+    private CardView findRoute, wisata, logout;
+    private TextView textViewWelcome, currentTime;
 
     OnLogoutListener logoutListener;
 
@@ -68,19 +68,12 @@ public class MenuFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         // ((AppCompatActivity) getActivity()).setTitle("");
 
-
-
-
         findRoute = view.findViewById(R.id.findRoute);
         wisata = view.findViewById(R.id.listWisata);
         logout = view.findViewById(R.id.logout);
         textViewWelcome = view.findViewById(R.id.welcome_text);
         currentTime = view.findViewById(R.id.current_time);
 
-
-        // login = findViewById(R.id.login);
-        // int vertices = 31;
-        //  graph = new Graph(vertices, this);
         textViewWelcome.setText("Hallo, " + prefConfig.readName());
 
         CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
@@ -114,14 +107,6 @@ public class MenuFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), EmailActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,9 +163,9 @@ public class MenuFragment extends Fragment {
             case R.id.exit:
                 exit();
                 break;
-//            case R.id.version:
-//                version();
-//                break;
+            case R.id.version:
+                version();
+                break;
             case R.id.profil:
                 profil();
                 break;
@@ -204,18 +189,6 @@ public class MenuFragment extends Fragment {
                 dialog.cancel();
             }
         }).show();
-//                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, close
-//                        // current activity
-//                        MainActivity.this.finish();
-//                    }
-//                })
-//                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, just close
-//                        // the dialog box and do nothing
-//                        dialog.cancel();
     }
 
     public void profil() {
@@ -229,12 +202,7 @@ public class MenuFragment extends Fragment {
         alertDialogBuilder
                 .setMessage(prefConfig.readName() + "")
                 .setTitle("About")
-                .setCancelable(false).setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
+                .setCancelable(false).setNegativeButton("OK", (dialog, which) -> dialog.cancel()).show();
 //
     }
 
@@ -247,7 +215,7 @@ public class MenuFragment extends Fragment {
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Hey, " + prefConfig.readName() + " Are you sure to exit?")
+                .setMessage("Hey, " + prefConfig.readName() + "\nAre you sure to exit?")
                 .setCancelable(false)
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -269,6 +237,21 @@ public class MenuFragment extends Fragment {
 
         // show it
         alertDialog.show();
+    }
+
+    public void version() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+
+        // set title
+        alertDialogBuilder.setTitle(null);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("App Version 1.0.0")
+                .setTitle("Version")
+                .setCancelable(false).setNegativeButton("OK", (dialog, which) -> dialog.cancel()).show();
+
     }
 
 

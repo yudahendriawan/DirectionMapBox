@@ -733,12 +733,10 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
-
         spinner1 = dialogView.findViewById(R.id.spinnerPriority1);
         spinner2 = dialogView.findViewById(R.id.spinnerPriority2);
         spinner3 = dialogView.findViewById(R.id.spinnerPriority3);
         randomPrior = dialogView.findViewById(R.id.randomPriority);
-
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.bobot1, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -757,9 +755,6 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         spinner3.setSelection(spinnerSelected3);
 
         randomPrior.setOnClickListener(v -> {
-//                int randomSpinner1 = 1;
-//                int randomSpinner2= 1;
-//                int randomSpinnner3 = 1;
             boolean check = true;
 
             while (check) {
@@ -869,14 +864,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
             }
         });
 
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
-
-            }
-        });
+        dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         dialog.show();
 

@@ -65,6 +65,7 @@ public class RegristrationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_regristration, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         name = view.findViewById(R.id.name);
         user_name = view.findViewById(R.id.user_name);
         user_password = view.findViewById(R.id.user_password);
@@ -73,29 +74,17 @@ public class RegristrationFragment extends Fragment {
 
         progressBar_Loader.setVisibility(View.INVISIBLE);
 
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar_Loader.setVisibility(View.VISIBLE);
-                btn_register.setVisibility(View.GONE);
+        btn_register.setOnClickListener(v -> {
+            progressBar_Loader.setVisibility(View.VISIBLE);
+            btn_register.setVisibility(View.GONE);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        confirmInput();
-                    }
-                }, 1500);
+            new Handler().postDelayed(() -> confirmInput(), 1500);
 
-            }
         });
         return view;
     }
 
     public void performRegistration() {
-//        String nama = name.getEditText().getText().toString().trim();
-//        String username = user_name.getEditText().getText().toString().trim();
-//        String userpassword = user_password.getEditText().getText().toString().trim();
-
 
         Call<User> call = MenuActivity.apiInterface.performRegristration(nameInput, usernameInput, passwordInput);
 
@@ -104,6 +93,8 @@ public class RegristrationFragment extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.body().getResponse().equals("ok")) {
                     MenuActivity.prefConfig.displayToast("Registration Success");
+                    progressBar_Loader.setVisibility(View.GONE);
+                    btn_register.setVisibility(View.VISIBLE);
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
                 } else if (response.body().getResponse().equals("exist")) {
                     MenuActivity.prefConfig.displayToast("User Already Exist");
@@ -166,7 +157,7 @@ public class RegristrationFragment extends Fragment {
             return false;
             //regex check
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            user_password.setError("Password must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
+            user_password.setError("Password must contain at least one lowercase letter, one uppercase letter, and one numeric digit");
             user_password.requestFocus();
             return false;
         } else {

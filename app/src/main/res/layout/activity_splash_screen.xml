@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/bg_splash"
     android:orientation="vertical"
     android:paddingTop="100dp"
     tools:context=".SplashScreenActivity">
@@ -13,32 +13,35 @@
         android:id="@+id/img_logo_splash"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-
-        android:background="@drawable/based_logo" />
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/based_logo"
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:id="@+id/text_welcome_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/nunito_bold"
-        android:gravity="center"
+        android:gravity="center|bottom"
 
         android:text="Welcome"
         android:textAlignment="center"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="50sp" />
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/text_slogan_splash"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="25dp"
         android:fontFamily="@font/nunito_light"
-        android:gravity="center"
+        android:gravity="center|bottom"
         android:text="Make your own journey"
+        android:layout_marginTop="16dp"
         android:textAlignment="center"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/white"
         android:textSize="20sp" />
 
 </LinearLayout>

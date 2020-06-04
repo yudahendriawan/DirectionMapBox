@@ -91,14 +91,15 @@
                         android:id="@+id/switchSourceDest"
                         android:layout_width="wrap_content"
                         android:layout_height="70dp"
-
+                        app:borderWidth="0dp"
                         android:layout_gravity="fill"
-                        android:background="@drawable/font_red"
-                        android:backgroundTint="@color/colorPrimary"
+
+                        android:backgroundTint="@android:color/white"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:src="@drawable/sort"
+
                         android:text="Bobot"
                         android:textColor="@android:color/white"
                         app:backgroundTint="#2b569a"
@@ -122,13 +123,14 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="0.3"
+                    android:backgroundTint="@android:color/white"
                     android:background="@drawable/font_red"
                     android:clickable="true"
                     android:focusable="true"
                     android:fontFamily="@font/nunito_bold"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:text="Clear"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/show"
@@ -138,13 +140,13 @@
                     android:layout_margin="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="0.3"
-                    android:background="@drawable/font_red"
+                    android:backgroundTint="@android:color/white"
                     android:clickable="true"
                     android:focusable="true"
                     android:fontFamily="@font/nunito_bold"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:text="priority"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
 
             </LinearLayout>
@@ -165,8 +167,8 @@
                 android:layout_height="70dp"
 
                 android:layout_margin="20dp"
-
-                android:backgroundTint="@color/colorPrimary"
+                app:borderWidth="0dp"
+                android:backgroundTint="@android:color/white"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -188,10 +190,10 @@
                 android:id="@+id/show_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-
+                app:borderWidth="0dp"
                 android:layout_margin="20dp"
 
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@android:color/white"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"

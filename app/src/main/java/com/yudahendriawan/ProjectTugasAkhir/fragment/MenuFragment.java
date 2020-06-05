@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yudahendriawan.ProjectTugasAkhir.AnimationActivity;
 import com.yudahendriawan.ProjectTugasAkhir.EmailActivity;
 import com.yudahendriawan.ProjectTugasAkhir.MainActivity;
 import com.yudahendriawan.ProjectTugasAkhir.MenuActivity;
@@ -94,7 +95,7 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 // graph.addEdgeDB();
                 // Toast.makeText(v.getContext(), "Get Data Form Database", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), AnimationActivity.class);
                 startActivity(intent);
 
             }

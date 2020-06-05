@@ -19,6 +19,7 @@
         android:background="@drawable/based_logo"
         android:layout_marginLeft="20dp" />
 
+
     <TextView
         android:id="@+id/text_welcome_splash"
         android:layout_width="match_parent"

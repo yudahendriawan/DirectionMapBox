@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yudahendriawan.ProjectTugasAkhir.R;
@@ -25,6 +27,7 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
     ResultPresenter presenter;
     ResultMapAdapter adapter;
     ResultMapAdapter.ItemClickListener itemClickListener;
+    TextView countWisata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +43,13 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        countWisata = findViewById(R.id.tv_count_wisataa);
+        countWisata.setVisibility(View.GONE);
+
         int[] pathFix = getIntent().getIntArrayExtra("pathResultFix");
 
         presenter = new ResultPresenter(this);
         presenter.getData(pathFix);
-
-        // Toast.makeText(this,"Ditemukan "+adapter.getItemCount()+" wisata pada jalur",Toast.LENGTH_SHORT).show();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -71,7 +75,6 @@ public class ResultMapActivity extends AppCompatActivity implements ResultView {
         adapter = new ResultMapAdapter(this, placesList, itemClickListener);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
-
         placesList = wisatas;
     }
 

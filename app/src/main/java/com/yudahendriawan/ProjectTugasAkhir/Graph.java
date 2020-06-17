@@ -349,7 +349,6 @@ class Graph {
                         wisataForSD[i] = response.body().get(p).getNumber() + "";
                         wisataForSD[i + 1] = response.body().get(p).getName();
 
-
                         p++;
                     }
 

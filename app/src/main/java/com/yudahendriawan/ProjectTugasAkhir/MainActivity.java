@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
         graph.addEdgeDB();
         Toast.makeText(this, "Get Data from DB", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, getResources()., Toast.LENGTH_SHORT).show();
 
 //        getDataFromDB.setOnClickListener(v -> {
 //            graph.addEdgeDB();
@@ -209,7 +210,9 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
 
         getRoutes.setOnClickListener(v -> {
-            if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0 && bobotKepadatan != 0) {
+            if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0
+                    && bobotKepadatan != 0 && !acSource.getText().toString().isEmpty()
+                    && !acDest.getText().toString().isEmpty()) {
 
                 //mengambil source and destination dari inputan
                 for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
@@ -232,10 +235,15 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                     weightedProduct();
                     showMap(savedInstanceState);
                 } else {
-                    Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_SHORT);
+                    Toast.makeText(MainActivity.this, "Priorities haven't been set", Toast.LENGTH_SHORT);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "Priority hasn't been set", Toast.LENGTH_LONG).show();
+                if (bobotJarak == 0 || bobotWisata == 0 || bobotKepadatan == 0) {
+                    Toast.makeText(MainActivity.this, "Priorities haven't been set", Toast.LENGTH_LONG).show();
+                }
+                if (acSource.getText().toString().isEmpty() || acDest.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -380,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
             @Override
             public void onFailure(Call<DirectionsResponse> call, Throwable throwable) {
-                Timber.e("Error: " + throwable.getMessage());
+                Timber.e("Error: Check internet connection..");
                 Toast.makeText(MainActivity.this, "Error: " + throwable.getMessage(),
                         Toast.LENGTH_SHORT).show();
                 getRoutes.setVisibility(View.VISIBLE);
@@ -453,6 +461,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
             //akan digunakan utk menampung criteria
             Double[][] data = new Double[dfs.getTemp().size()][3];
             Log.d("tempSize", String.valueOf(dfs.getTemp().size()));
+
 //        for(int i = 0 ; i <data.length; i ++){
 //
 //        }
@@ -842,23 +851,22 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
         dialog.setPositiveButton("OK", (dialog, which) -> {
             if (spinner1.getSelectedItem().toString().equals(spinner2.getSelectedItem().toString())) {
-                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dialogView.getContext(), "Priorities must be different", Toast.LENGTH_SHORT).show();
                 dialogForm();
             } else if (spinner2.getSelectedItem().toString().equals(spinner3.getSelectedItem().toString())) {
-                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dialogView.getContext(), "Priorities must be different", Toast.LENGTH_SHORT).show();
                 dialogForm();
             } else if (spinner1.getSelectedItem().toString().equals(spinner3.getSelectedItem().toString())) {
-                Toast.makeText(dialogView.getContext(), "Priority tidak boleh sama", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dialogView.getContext(), "Priorities must be different", Toast.LENGTH_SHORT).show();
                 dialogForm();
             } else if (spinner1.getSelectedItem().equals("Choose Priority-1") || spinner2.getSelectedItem().equals("Choose Priority-2")
                     || spinner3.getSelectedItem().equals("Choose Priority-3")) {
-                Toast.makeText(dialogView.getContext(), "Priority harus diisi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dialogView.getContext(), "Priorities haven't been set", Toast.LENGTH_SHORT).show();
                 dialogForm();
             } else {
                 String bobot = "Jarak : " + bobotJarak + ", Wisata : " + bobotWisata + ", Kepadatan : " + bobotKepadatan;
                 getRoutes.setVisibility(View.VISIBLE);
                 Log.d("bobot", bobot);
-
 
                 dialog.dismiss();
             }

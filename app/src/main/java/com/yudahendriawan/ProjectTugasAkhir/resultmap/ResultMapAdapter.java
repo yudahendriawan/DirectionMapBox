@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.yudahendriawan.ProjectTugasAkhir.R;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
 import com.yudahendriawan.ProjectTugasAkhir.model.Wisata;
@@ -44,9 +45,9 @@ public class ResultMapAdapter extends RecyclerView.Adapter<ResultMapAdapter.Recy
     @Override
     public void onBindViewHolder(@NonNull ResultMapAdapter.RecyclerViewAdapter holder, int position) {
         holder.binding(wisatas.get(position));
-
         Toast.makeText(context, "Ditemukan " + wisatas.size() + " wisata pada jalur", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public int getItemCount() {
@@ -59,8 +60,6 @@ public class ResultMapAdapter extends RecyclerView.Adapter<ResultMapAdapter.Recy
         TextView name, operation_time, fee_wisata;
         ImageView img_wisata;
         LinearLayout linearLayout_list;
-
-
 
         public RecyclerViewAdapter(@NonNull View itemView, ItemClickListener itemClickListener) {
             super(itemView);

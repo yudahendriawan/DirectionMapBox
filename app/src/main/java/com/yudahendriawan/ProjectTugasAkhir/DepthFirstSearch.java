@@ -76,7 +76,7 @@ public class DepthFirstSearch {
 
                 //mengubah type arraylist menjadi double agar bisa diolah
                 distanceInteger = new ArrayList<Double>();
-                ;
+
                 for (int j = 0; j < distanceString.size(); j++) {
                     distanceInteger.add(Double.parseDouble(distanceString.get(j)));
                 }

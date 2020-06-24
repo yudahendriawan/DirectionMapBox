@@ -62,6 +62,14 @@
         <item>Kepadatan Jalan</item>
     </string-array>
 
+    <string-array name="time">
+        <item>Choose Time</item>
+        <item>07.00-09.00</item>
+        <item>09.00-12.00</item>
+        <item>12.00-15.00</item>
+        <item>15.00-21.00</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">hello</string>
     <string name="pref_file">com.yudahendriawan.preference_file</string>

@@ -13,7 +13,7 @@ public class ApiClient {
     // private static final String BASE_URL = "http://192.168.0.18/androidapp/";
 
     //WIFI WARUNG WOW PNG 2
-    private static final String BASE_URL = "http://192.168.0.160/androidapp/";
+    private static final String BASE_URL = "http://192.168.1.73/androidapp/";
 
     //tethering hp
    // private static final String BASE_URL = "http://192.168.43.23/androidapp/";

@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
     //ProgressDialog progressDialog;
     Spinner spinner1, spinner2, spinner3;
+    Spinner spinnerTime;
 
     private List<Point> pointList;
     //private List<Node> nodes = new ArrayList();
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     FloatingActionButton getCurrentLocation;
     FloatingActionButton getListWisata;
     Button clearBtn;
+    Button timeBtn;
 
     int vertices = 31;
     int getSource = 1000;
@@ -133,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     int spinnerSelected1 = 0;
     int spinnerSelected2 = 0;
     int spinnerSelected3 = 0;
+    int spinnerTimeSelected = 0;
+
+    int time_choosen = 0;
 
 
     int bobotJarak;
@@ -175,6 +180,14 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         progressBar = findViewById(R.id.progress_loader);
         //getListWisata = findViewById(R.id);
         getListWisata = findViewById(R.id.fab_listwisata);
+        timeBtn = findViewById(R.id.btn_time);
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         getRoutes.setVisibility(View.INVISIBLE);
 
@@ -199,15 +212,6 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
         graph.addEdgeDB();
         Toast.makeText(this, "Get Data from DB", Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, getResources()., Toast.LENGTH_SHORT).show();
-
-//        getDataFromDB.setOnClickListener(v -> {
-//            graph.addEdgeDB();
-//            Toast.makeText(v.getContext(), "Get Data from DB", Toast.LENGTH_SHORT).show();
-//            setPriority.setVisibility(View.VISIBLE);
-//            getRoutes.setVisibility(View.VISIBLE);
-//        });
-
 
         getRoutes.setOnClickListener(v -> {
             if (graph.adjacencyList != null && bobotJarak != 0 && bobotWisata != 0
@@ -734,6 +738,49 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         inputBobotJarak.setText("");
     }
 
+    public void dialogFormTime() {
+        dialog = new AlertDialog.Builder(MainActivity.this);
+        inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.form_time, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        spinnerTime = dialogView.findViewById(R.id.spinnerTime);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.time, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTime.setAdapter(adapter1);
+
+        spinnerTime.setSelection(spinnerTimeSelected);
+
+        int changeRoadDensity;
+
+        if (spinnerTime.getSelectedItemPosition() == 0) {
+            spinnerTimeSelected = 0;
+        } else if (spinnerTime.getSelectedItemPosition() == 1) {
+            changeRoadDensity = 1;
+        } else if (spinnerTime.getSelectedItemPosition() == 2) {
+            changeRoadDensity = -1;
+        } else if (spinnerTime.getSelectedItemPosition() == 3) {
+            changeRoadDensity = 0;
+        } else if (spinnerTime.getSelectedItemPosition() == 4) {
+            changeRoadDensity = 1;
+        }
+
+        dialog.setPositiveButton("OK", (dialog, which) -> {
+
+            if (spinnerTime.getSelectedItemPosition() == 0) {
+                Toast.makeText(dialogView.getContext(), "Time hasn't been set", Toast.LENGTH_SHORT);
+                dialogFormTime();
+            } else {
+
+            }
+
+            dialog.dismiss();
+        });
+
+
+    }
+
     public void dialogForm() {
 
         dialog = new AlertDialog.Builder(MainActivity.this);
@@ -788,13 +835,13 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                 //String text = parent.getItemAtPosition(position).toString();
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
-                    bobotJarak = 50;
+                    bobotJarak = 36;
                     spinnerSelected1 = 1;
                 } else if (item == 2) {
-                    bobotWisata = 50;
+                    bobotWisata = 36;
                     spinnerSelected1 = 2;
                 } else if (item == 3) {
-                    bobotKepadatan = 50;
+                    bobotKepadatan = 36;
                     spinnerSelected1 = 3;
                 }
             }
@@ -810,13 +857,13 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int item = parent.getSelectedItemPosition();
                 if (item == 1) {
-                    bobotJarak = 10;
+                    bobotJarak = 6;
                     spinnerSelected2 = 1;
                 } else if (item == 2) {
-                    bobotWisata = 10;
+                    bobotWisata = 6;
                     spinnerSelected2 = 2;
                 } else if (item == 3) {
-                    bobotKepadatan = 10;
+                    bobotKepadatan = 6;
                     spinnerSelected2 = 3;
                 }
             }

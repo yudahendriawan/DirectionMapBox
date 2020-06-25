@@ -144,7 +144,7 @@
                     android:layout_weight="0.3"
                     android:backgroundTint="@android:color/white"
                     android:clickable="true"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:focusable="true"
                     android:fontFamily="@font/nunito_bold"
                     android:foreground="?android:attr/selectableItemBackground"

@@ -164,7 +164,7 @@ class Graph {
 
     }
 
-    public void addEdgeDB() {
+    public void addEdgeDB(double changeRoadDensity) {
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<List<Node>> call = apiInterface.getNode();
@@ -190,7 +190,8 @@ class Graph {
                         data[i][3] = response.body().get(i).getRoadDensity();
 
                     }
-                    getData(data);
+
+                    getData(data, changeRoadDensity);
                     halo = "print aku";
                     past = true;
                     Log.d("datasize", "data tidak null");
@@ -279,13 +280,16 @@ class Graph {
         this.adjacencyList = adjacencyList;
     }
 
-    public void getData(double[][] data) {
+    public void getData(double[][] data, double changeRoadDensity) {
         //  adjacencyList = null;
 
         Log.d("getData", "Method getData()");
         boolean isSuccess = true;
 
         ArrayList<Node> nodeData = new ArrayList<>();
+
+        int i = 1;
+
         for (double[] dataKu : data) {
             Node node = new Node();
 
@@ -297,13 +301,23 @@ class Graph {
             node.setSource(first);
             node.setDestination(second);
             node.setDistance(dataKu[2]);
-            node.setRoadDensity(dataKu[3]);
+
+            if (getChangeRoadDensity().contains(i)) {
+                node.setRoadDensity((dataKu[3] / dataKu[2]) * (1 + changeRoadDensity));
+            } else {
+                node.setRoadDensity(dataKu[3] / dataKu[2]);
+            }
+
+            i++;
+            Log.d("muchi", i + "");
 
             nodeData.add(node);
+//            adjacencyList[i].clear();
             adjacencyList[node.getSource()].add(node);
 
             if (isSuccess) {
-                Toast.makeText(context, "Get Data Succes", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, ""+changeRoadDensity,Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Get Data Succes " + changeRoadDensity, Toast.LENGTH_SHORT).show();
                 //MainActivity.cobaProgressBar.setVisibility(View.GONE);
                 // MainActivity.getDataFromDB.setVisibility(View.GONE);
                 MainActivity.setPriority.setVisibility(View.VISIBLE);
@@ -311,9 +325,36 @@ class Graph {
                 isSuccess = false;
             }
 
+
         }
+
         Log.d("nodeData", nodeData.toString());
 
+    }
+
+    //data id edge yang dilakukan perubahan
+    public ArrayList<Integer> getChangeRoadDensity() {
+
+        Integer[] list = {
+                1, 2,
+                3, 4,
+                5, 6,
+                17, 18,
+                25, 26,
+                29, 30,
+                31, 32,
+                33, 34,
+                35, 36,
+                39, 40,
+                41, 42,
+                43, 44,
+                51, 52,
+                53, 54,
+                55, 56,
+                57, 58,
+                61, 62};
+        ArrayList<Integer> listId = new ArrayList<>(Arrays.asList(list));
+        return listId;
     }
 
     public void getPlacesData() {

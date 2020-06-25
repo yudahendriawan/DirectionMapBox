@@ -21,6 +21,7 @@ public class DepthFirstSearch {
     ArrayList<ArrayList<Double>> listOfRoadDensity = new ArrayList<>();
     double[][] data;
 
+
     public ArrayList<ArrayList<Double>> print(Graph graph, int start,
                                               int end, double distance, double roadDensity, String path, boolean[] visited) {
 
@@ -36,9 +37,12 @@ public class DepthFirstSearch {
         //getDataFromDB DFS
         LinkedList<Node> list = graph.adjacencyList[start];
 
+        Log.d("crd", graph.adjacencyList[start] + "");
+
         for (int i = 0; i < list.size(); i++) {
             //   Node node = new Node();
             Node node = list.get(i);
+
 
             sum_of_distance = distance;
             sum_of_road_density = roadDensity;

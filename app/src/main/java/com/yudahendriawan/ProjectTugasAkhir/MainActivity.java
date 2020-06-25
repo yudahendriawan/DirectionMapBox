@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
     public static ProgressBar cobaProgressBar;
 
     TextView randomPrior;
+    double changeRoadDensity = 0;
 
     int[] pathResultFixInt;
 
@@ -182,15 +183,6 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         getListWisata = findViewById(R.id.fab_listwisata);
         timeBtn = findViewById(R.id.btn_time);
 
-        timeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        getRoutes.setVisibility(View.INVISIBLE);
-
 
         getRoutes.setVisibility(View.INVISIBLE);
         setPriority.setVisibility(View.INVISIBLE);
@@ -210,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         setPriority.setOnClickListener(v -> dialogForm());
         getListWisata.setVisibility(View.GONE);
 
-        graph.addEdgeDB();
+        graph.addEdgeDB(changeRoadDensity);
         Toast.makeText(this, "Get Data from DB", Toast.LENGTH_SHORT).show();
 
         getRoutes.setOnClickListener(v -> {
@@ -284,6 +276,13 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                 Intent intent = new Intent(v.getContext(), ResultMapActivity.class);
                 intent.putExtra("pathResultFix", pathResultFixInt);
                 startActivity(intent);
+            }
+        });
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFormTime();
             }
         });
 
@@ -745,6 +744,7 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
+
         spinnerTime = dialogView.findViewById(R.id.spinnerTime);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(dialogView.getContext(), R.array.time, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -752,31 +752,39 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
 
         spinnerTime.setSelection(spinnerTimeSelected);
 
-        int changeRoadDensity;
+        graph = new Graph(vertices, this);
+        dfs = new DepthFirstSearch();
 
-        if (spinnerTime.getSelectedItemPosition() == 0) {
-            spinnerTimeSelected = 0;
-        } else if (spinnerTime.getSelectedItemPosition() == 1) {
-            changeRoadDensity = 1;
-        } else if (spinnerTime.getSelectedItemPosition() == 2) {
-            changeRoadDensity = -1;
-        } else if (spinnerTime.getSelectedItemPosition() == 3) {
-            changeRoadDensity = 0;
-        } else if (spinnerTime.getSelectedItemPosition() == 4) {
-            changeRoadDensity = 1;
-        }
 
         dialog.setPositiveButton("OK", (dialog, which) -> {
-
             if (spinnerTime.getSelectedItemPosition() == 0) {
-                Toast.makeText(dialogView.getContext(), "Time hasn't been set", Toast.LENGTH_SHORT);
+                Toast.makeText(dialogView.getContext(), "Time hasn't been set", Toast.LENGTH_SHORT).show();
                 dialogFormTime();
             } else {
-
+                if (spinnerTime.getSelectedItemPosition() == 0) {
+                    spinnerTimeSelected = 0;
+                } else if (spinnerTime.getSelectedItemPosition() == 1) {
+                    changeRoadDensity = 1;
+                    spinnerTimeSelected = 1;
+                } else if (spinnerTime.getSelectedItemPosition() == 2) {
+                    changeRoadDensity = -1;
+                    spinnerTimeSelected = 2;
+                } else if (spinnerTime.getSelectedItemPosition() == 3) {
+                    changeRoadDensity = 0;
+                    spinnerTimeSelected = 3;
+                } else if (spinnerTime.getSelectedItemPosition() == 4) {
+                    changeRoadDensity = 1;
+                    spinnerTimeSelected = 4;
+                }
+                graph.addEdgeDB(changeRoadDensity);
             }
 
             dialog.dismiss();
         });
+
+        dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        dialog.show();
 
 
     }

@@ -10,10 +10,10 @@ public class ApiClient {
 
     //private static final String BASE_URL = "http://notes-app-by-yuda.000webhostapp.com/";
     //pakai emulator
-    private static final String BASE_URL = "http://192.168.0.14/androidapp/";
+    private static final String BASE_URL = "http://192.168.0.9/androidapp/";
 
     //WIFI WARUNG WOW PNG 2
-    // private static final String BASE_URL = "http://192.168.1.73/androidapp/";
+    //private static final String BASE_URL = "http://192.168.0.9/androidapp/";
 
     //tethering hp
    // private static final String BASE_URL = "http://192.168.43.23/androidapp/";

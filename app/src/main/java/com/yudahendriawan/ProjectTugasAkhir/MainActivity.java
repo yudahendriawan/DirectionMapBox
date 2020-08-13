@@ -210,16 +210,32 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                     && bobotKepadatan != 0 && !acSource.getText().toString().isEmpty()
                     && !acDest.getText().toString().isEmpty()) {
 
+                //untuk mengecek apakah lokasi yang diinput ada dalam database
+                int ketemuSource = 0;
+                int ketemuDest = 0;
+                for (int k = 0; k < acWisata.length; k++) {
+                    if (acSource.getText().toString().equals(acWisata[k])) {
+                        ketemuSource = ketemuSource + 1;
+                    }
+                    if (acDest.getText().toString().equals(acWisata[k])) {
+                        ketemuDest = ketemuDest + 1;
+                    }
+                }
+
                 //mengambil source and destination dari inputan
-                for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
-                    if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
-                        getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
-                        Log.d("getSource", String.valueOf(getSource));
+                if (ketemuDest == 1 && ketemuSource == 1) {
+                    for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
+                        if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                            getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
+                            Log.d("getSource", String.valueOf(getSource));
+                        }
+                        if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
+                            getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
+                            Log.d("getDest", String.valueOf(getDest));
+                        }
                     }
-                    if (acDest.getText().toString().equals(graph.getWisataSourceDest()[i])) {
-                        getDest = Integer.parseInt((graph.getWisataSourceDest()[i - 1]));
-                        Log.d("getDest", String.valueOf(getDest));
-                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Lokasi tidak terdata", Toast.LENGTH_SHORT);
                 }
 
                 //untuk proses kedua
@@ -233,6 +249,9 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                 } else {
                     Toast.makeText(MainActivity.this, "Priorities haven't been set", Toast.LENGTH_SHORT);
                 }
+
+                ketemuDest = 0;
+                ketemuSource = 0;
             } else {
                 if (bobotJarak == 0 || bobotWisata == 0 || bobotKepadatan == 0) {
                     Toast.makeText(MainActivity.this, "Priorities haven't been set", Toast.LENGTH_LONG).show();
@@ -241,6 +260,8 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                     Toast.makeText(MainActivity.this, "Fill Source & Destination", Toast.LENGTH_LONG).show();
                 }
             }
+
+
         });
 
         switchBtn.setOnClickListener(new View.OnClickListener() {

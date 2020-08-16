@@ -48,6 +48,7 @@ import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
+import com.mapbox.mapboxsdk.style.sources.Source;
 import com.yudahendriawan.ProjectTugasAkhir.model.Criteria;
 import com.yudahendriawan.ProjectTugasAkhir.model.Places;
 import com.yudahendriawan.ProjectTugasAkhir.resultmap.ResultMapActivity;
@@ -211,19 +212,21 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                     && !acDest.getText().toString().isEmpty()) {
 
                 //untuk mengecek apakah lokasi yang diinput ada dalam database
+                boolean sourceExist = false;
+                boolean destExist = false;
                 int ketemuSource = 0;
                 int ketemuDest = 0;
                 for (int k = 0; k < acWisata.length; k++) {
                     if (acSource.getText().toString().equals(acWisata[k])) {
-                        ketemuSource = ketemuSource + 1;
+                        sourceExist = true;
                     }
                     if (acDest.getText().toString().equals(acWisata[k])) {
-                        ketemuDest = ketemuDest + 1;
+                        destExist = true;
                     }
                 }
 
                 //mengambil source and destination dari inputan
-                if (ketemuDest == 1 && ketemuSource == 1) {
+                if (destExist && sourceExist) {
                     for (int i = 0; i < graph.getWisataSourceDest().length; i++) {
                         if (acSource.getText().toString().equals(graph.getWisataSourceDest()[i])) {
                             getSource = Integer.parseInt(graph.getWisataSourceDest()[i - 1]);
@@ -234,8 +237,10 @@ public class MainActivity extends AppCompatActivity implements /*OnMapReadyCallb
                             Log.d("getDest", String.valueOf(getDest));
                         }
                     }
+                    sourceExist = false;
+                    destExist = false;
                 } else {
-                    Toast.makeText(MainActivity.this, "Lokasi tidak terdata", Toast.LENGTH_SHORT);
+                    Toast.makeText(MainActivity.this, "Lokasi tidak terdata", Toast.LENGTH_SHORT).show();
                 }
 
                 //untuk proses kedua
